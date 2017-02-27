@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'https://localhost/Fishing/';
+$config['base_url']	= 'https://localhost/Stokefish/';
 
 /*
 |--------------------------------------------------------------------------
