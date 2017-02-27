@@ -107,7 +107,7 @@ function getfocus(){
               <tr>
                 <td><div align="center"><?php echo ($i+1) ?></div></td>
                 <td>&nbsp;<?php echo @$_SESSION['product'][$i]['product_code']?> <?php echo @$_SESSION['product'][$i]['product_name']?><input name="product_code[]" id="product_code[]" type="hidden" value="<?php echo @$_SESSION['product'][$i]['product_code']?>" /> <?php echo anchor('sale/sale_list_delete/'.@$_SESSION['product'][$i]['product_key'],'<i class="fa fa-trash-o"></i>')?></td>
-                <td><div align="center"><input type="number" step="any"  name="product_price" class="form-control" value="<?php echo @$_SESSION['product'][$i]['product_sale']*1?>"></div></td>
+                <td><div align="right"><?php echo @$_SESSION['product'][$i]['product_sale']?>.00&nbsp;</div></td>
                 <td><div align="center">1</div></td>
                 <td height="40"><div align="right"><?php echo @$_SESSION['product'][$i]['product_sale']?>.00&nbsp;</div></td>
               </tr>
@@ -118,14 +118,6 @@ function getfocus(){
                 <td><div align="right"><?php echo @number_format(@array_sum(@$total))?>.00&nbsp;</div></td>
                 <td><div align="center"><?php echo count(@$_SESSION['product'])?></div></td>
                 <td height="40"><div align="right"><?php echo @number_format(@array_sum(@$total))?>.00&nbsp;</div></td>
-              </tr>
-              <tr>
-                <td colspan="4" align="center"><strong><input type="checkbox"> ภาษีมูลค่าเพิ่ม 7%</strong></td>
-                <td height="40"></td>
-              </tr>
-              <tr>
-                <td colspan="4" align="center"><strong><input type="checkbox"> รวมยอดสุทธิ</strong></td>
-                <td height="40" align="right"><?php echo @number_format(@array_sum(@$total))?>.00&nbsp;</td>
               </tr>
             </table></td>
             <td valign="top"><div align="center">

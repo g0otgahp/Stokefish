@@ -33,42 +33,27 @@
         <td><?php echo $product['product_name']?></td>
         <td align="center"><?php echo $product['product_unit']?></td>
         <td><div align="center">
+        <?php
+      $this->db->select_sum('stock_amount');
+			$this->db->where('stock_product',$product['product_code']);
+			$this->db->where('stock_shop',@$_SESSION['employees_shop']);
+			$this->db->where('stock_type','in');
+			$in = $this->db->get('stock');
+			$in_stock_amount = $in->result_array();
 
-          <?php
-          $this->db->order_by('sale_order_detail_date','desc');
-          $this->db->where('stock_shop',@$_SESSION['employees_shop']);
-          $this->db->where('sale_order_detail_status',1);
-          $this->db->join('stock','stock.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
-          $this->db->where('stock_type','in');
-          $this->db->join('member','member.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
-          $this->db->join('product','product.product_code = stock.stock_product');
-          $in = $this->db->get('sale_order_detail');
-          $in_stock_amount = $in->result_array();
+			$this->db->select_sum('stock_amount');
+			$this->db->where('stock_product',$product['product_code']);
+			$this->db->where('stock_shop',@$_SESSION['employees_shop']);
+			$this->db->where('stock_type','out');
+			$out = $this->db->get('stock');
+			$out_stock_amount = $out->result_array();
 
-          $amount_in=0; foreach ($in_stock_amount as $in_amount) {
-            $amount_in += $in_amount['stock_amount'];
-          }
-
-          $this->db->order_by('sale_order_detail_date','desc');
-          $this->db->where('stock_shop',@$_SESSION['employees_shop']);
-          $this->db->where('sale_order_detail_status',1);
-          $this->db->join('stock','stock.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
-          $this->db->where('stock_type','out');
-          $this->db->join('member','member.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
-          $this->db->join('product','product.product_code = stock.stock_product');
-          $out = $this->db->get('sale_order_detail');
-          $out_stock_amount = $out->result_array();
-
-          $amount_out=0; foreach ($out_stock_amount as $out_amount) {
-            $amount_out += $out_amount['stock_amount'];
-          }
-
-        echo number_format($stock_amount = ($amount_in - $amount_out));
-        ?>
-            </div></td>
-            <td><div align="center">
-            <?php
-      	 if(($product['product_limit_max'])<$stock_amount){
+			echo number_format($stock_amount = ((@$in_stock_amount[0]['stock_amount']+0) - (@$out_stock_amount[0]['stock_amount']+0)));
+		?>
+        </div></td>
+        <td><div align="center">
+        <?php
+        	if(($product['product_limit_max'])<$stock_amount){
 				echo "<span style='color:green;'>คงเหลือปกติ</span>";
 			}else{
 				echo "<span style='color:red;'>คงเหลือน้อยกว่าเกณฑ์</span>";

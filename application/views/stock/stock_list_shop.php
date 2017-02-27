@@ -59,10 +59,6 @@
 			  $in = $this->db->get('sale_order_detail');
 			  $in_stock_amount = $in->result_array();
 
-        $amount_in=0; foreach ($in_stock_amount as $in_amount) {
-          $amount_in += $in_amount['stock_amount'];
-        }
-
         $this->db->order_by('sale_order_detail_date','desc');
     		$this->db->where('sale_order_detail_shop',@$employees_shop);
         $this->db->where('sale_order_detail_status',1);
@@ -73,11 +69,8 @@
 			  $out = $this->db->get('sale_order_detail');
 			  $out_stock_amount = $out->result_array();
 
-        $amount_out=0; foreach ($out_stock_amount as $out_amount) {
-          $amount_out += $out_amount['stock_amount'];
-        }
 
-			echo number_format($stock_amount = ($amount_in - $amount_out));
+			echo number_format($stock_amount = ((@$in_stock_amount[0]['stock_amount']+0) - (@$out_stock_amount[0]['stock_amount']+0)));
 		?>
         </div></td>
         <td><div align="center">
