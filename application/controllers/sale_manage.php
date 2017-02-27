@@ -12,8 +12,12 @@ class sale_manage extends CI_Controller {
 		@$_SESSION['product'][$num]['product_key'] = date('YmdHis');
 		@$_SESSION['product'][$num]['product_code'] = $data[0]['product_code'];
 		@$_SESSION['product'][$num]['product_name'] = $data[0]['product_name'];
+		@$_SESSION['product'][$num]['product_buy'] = $data[0]['product_buy'];
 		@$_SESSION['product'][$num]['product_sale'] = $data[0]['product_sale'];
 
+		// echo "<pre>";
+		// print_r($data);
+		// exit();
 		redirect('sale/sale_list');
 	}
 	public function sale_clear()
@@ -71,6 +75,19 @@ class sale_manage extends CI_Controller {
 		@session_start();
 		unset($_SESSION['product']);
 		redirect('sale/sale_list');
+	}
+	public function sale_vat()
+	{
+		@session_start();
+		// print_r($_SESSION['is_vat']);
+		// exit();
+		if ($_SESSION['is_vat']=='') {
+			$_SESSION['is_vat'] = 'checked';
+		} elseif ($_SESSION['is_vat'] = 'checked') {
+			$_SESSION['is_vat'] = '';
+		}
+
+		redirect($this->agent->referrer(), 'refresh');
 	}
 
 }

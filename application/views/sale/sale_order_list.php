@@ -21,31 +21,31 @@
       </tr>
     </thead>
     <tbody>
-    <?php $confirm = array( 'onclick' => "return confirm('ต้องการลบข้อมูลหรือไม่?')");?>
+      <?php $confirm = array( 'onclick' => "return confirm('ต้องการลบข้อมูลหรือไม่?')");?>
       <?php $i = 1 ?>
-	  <?php foreach($sale_order_detail as $row){ ?>
-      <tr>
-        <td><div align="center"><?php echo $i ?></div></td>
-        <td><?php echo $row['stock_date']?></td>
-        <td><?php echo $row['stock_time']?></td>
-        <td><?php echo $row['sale_order_detail_no']?></td>
-        <?php if ($row['sale_order_detail_status']==0): ?>
-        <td><div align="center"><font color="red">ยกเลิกรายการแล้ว</font></td>
-        <?php else: ?>
-          <td><div align="center"><font color="green">ปกติ</font></div></td>
-        <?php endif; ?>
-        <td><?php echo $row['member_note']?></td>
-        <?php if ($row['sale_order_detail_status']==0): ?>
-          <td><div align="center"><?php echo anchor('stock/sale_order_detail/'.$row['sale_order_detail_id'],'<button type="button" class="btn btn-info">รายละเอียด</button>')?></div></td>
-        <?php else: ?>
-          <td><div align="center">
-            <?php echo anchor('stock/sale_order_detail/'.$row['sale_order_detail_id'],'<button type="button" class="btn btn-info">รายละเอียด</button>')?>
-            <?php echo anchor('stock/stock_cancel/'.$row['sale_order_detail_id'],'<button type="button" class="btn btn-danger">ยกเลิก</button>')?>
-          </div></td>
-        <?php endif; ?>
-      </tr>
-      <?php $i++ ?>
-	  <?php } ?>
-    </tbody>
-  </table>
-</div>
+      <?php foreach($sale_order_detail as $row){ ?>
+        <tr>
+          <td><div align="center"><?php echo $i ?></div></td>
+          <td><?php echo $row['stock_date']?></td>
+          <td><?php echo $row['stock_time']?></td>
+          <td><?php echo $row['sale_order_detail_no']?></td>
+          <?php if ($row['sale_order_detail_status']==0): ?>
+            <td><div align="center"><font color="red">ยกเลิกรายการแล้ว</font></td>
+            <?php else: ?>
+              <td><div align="center"><font color="green">ปกติ</font></div></td>
+            <?php endif; ?>
+            <td><?php echo $row['member_note']?></td>
+            <?php if ($row['sale_order_detail_status']==0): ?>
+              <td><div align="center"><?php echo anchor('stock/sale_order_detail/'.$row['sale_order_detail_id'],'<button type="button" class="btn btn-info">รายละเอียด</button>')?></div></td>
+            <?php else: ?>
+              <td><div align="center">
+                <?php echo anchor('stock/sale_order_detail/'.$row['sale_order_detail_id'],'<button type="button" class="btn btn-info">รายละเอียด</button>')?>
+                <?php echo anchor('stock/stock_cancel/'.$row['sale_order_detail_id'],'<button type="button" class="btn btn-danger">ยกเลิก</button>')?>
+              </div></td>
+            <?php endif; ?>
+          </tr>
+          <?php $i++ ?>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
