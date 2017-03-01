@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Product Barcode</title>
-<link rel="stylesheet" href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css">
+<link rel="stylesheet" href="<?php echo base_url('css/font-awesome.css'); ?>">
 </head>
 <style>
 body {
@@ -87,24 +87,24 @@ hr.style-two {
 }
 <?php } ?>
 </style>
-<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link href="<?php echo base_url('css/jquerysctipttop.css'); ?>" rel="stylesheet" type="text/css">
+<script src="<?php echo base_url('js/jquery-latest.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url()?>barcode/jquery-barcode.js"></script>
 <script type="text/javascript">
-    
+
       function generateBarcode(){
         var value = "<?php echo $product[0]['product_code']?>";
         //var value = $("#barcodeValue").val();
         var btype = "code128";
         //var btype = $("input[name=btype]:checked").val();
         var renderer = $("input[name=renderer]:checked").val();
-		
-        
+
+
 		var quietZone = false;
         if ($("#quietzone").is(':checked') || $("#quietzone").attr('checked')){
           quietZone = true;
         }
-		
+
         var settings = {
           output:renderer,
           bgColor: $("#bgColor").val(),
@@ -126,24 +126,24 @@ hr.style-two {
 		  <?php } ?>
           $("#canvasTarget").show().barcode(value, btype, settings);
         } else {
-		
+
           $("#canvasTarget").hide();
 		 <?php for($i=0;$i<32;$i++){ ?>
           $("#barcodeTarget<?php echo $i ?>").html("").show().barcode(value, btype, settings);
 		  <?php } ?>
         }
       }
-          
+
       function showConfig1D(){
         $('.config .barcode1D').show();
         $('.config .barcode2D').hide();
       }
-      
+
       function showConfig2D(){
         $('.config .barcode1D').hide();
         $('.config .barcode2D').show();
       }
-      
+
       function clearCanvas(){
         var canvas = $('#canvasTarget').get(0);
         var ctx = canvas.getContext('2d');
@@ -154,7 +154,7 @@ hr.style-two {
         ctx.clearRect (0, 0, canvas.width, canvas.height);
         ctx.strokeRect (0, 0, canvas.width, canvas.height);
       }
-      
+
       $(function(){
         $('input[name=btype]').click(function(){
           if ($(this).attr('id') == 'datamatrix') showConfig2D(); else showConfig1D();
@@ -164,9 +164,9 @@ hr.style-two {
         });
         generateBarcode();
       });
-  
+
     </script>
-    
+
 <body>
 <!--<page size="A4"></page>
 <page size="A4"></page>
@@ -181,8 +181,8 @@ hr.style-two {
   </div>
   <?php } ?>
 
- 
-  
+
+
   <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -196,7 +196,7 @@ hr.style-two {
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-</script> 
+</script>
 </page>
 <!--<page size="A3"></page>
 <page size="A3" layout="portrait"></page>-->
