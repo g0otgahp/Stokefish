@@ -24,7 +24,6 @@ function getfocus(){
           </div>
         </td>
       </tr>
-      <?php echo form_open('sale_manage/sale_insert')?>
       <tr>
         <td>
           <div align="center"><h3>รายละเอียดลูกค้า</h3></div>
@@ -35,12 +34,17 @@ function getfocus(){
           <div class="row" align="center">
             <div class="col-md-6">
               <div class="form-group">
-                <input type="text" name="member_fullname" id="member_fullname" autocomplete="off" class="form-control" placeholder="---- ชื่อ - สกุล ----" />
+                <?php echo form_open('sale_manage/sale_member_fullname')?>
+                <input type="text" onchange="this.form.submit()" name="member_fullname" id="member_fullname" autocomplete="off" class="form-control" placeholder="---- ชื่อ - สกุล ----" value="<?php echo @$_SESSION['member']['member_fullname']?>"/>
+                <?php echo form_close()?>
               </div>
             </div>
+
             <div class="col-md-6">
               <div class="form-group">
-                <input type="text" name="member_phone" id="member_phone" autocomplete="off" class="form-control" placeholder="---- เบอร์โทรศัพท์ ----" />
+                <?php echo form_open('sale_manage/sale_member_phone')?>
+                <input type="text" onchange="this.form.submit()" name="member_phone" id="member_phone" autocomplete="off" class="form-control" placeholder="---- เบอร์โทรศัพท์ ----" value="<?php echo @$_SESSION['member']['member_phone']?>"/>
+                <?php echo form_close()?>
               </div>
             </div>
           </div>
@@ -51,12 +55,16 @@ function getfocus(){
           <div class="row" align="center">
             <div class="col-md-6">
               <div class="form-group">
-                <textarea col="3" rows="3" name="member_address" id="member_address" class="form-control"  placeholder="---- ที่อยู่ ----" /></textarea>
+                <?php echo form_open('sale_manage/sale_member_address')?>
+                <textarea col="3" rows="3" onchange="this.form.submit()" name="member_address" id="member_address" class="form-control"  placeholder="---- ที่อยู่ ----" /><?php echo @$_SESSION['member']['member_address']?></textarea>
+                <?php echo form_close()?>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <textarea col="3" rows="3" name="member_note" id="member_note" class="form-control"  placeholder="---- หมายเหตุ ----" /></textarea>
+                <?php echo form_open('sale_manage/sale_member_note')?>
+                <textarea col="3" rows="3" onchange="this.form.submit()" name="member_note" id="member_note" class="form-control"  placeholder="---- หมายเหตุ ----" /><?php echo @$_SESSION['member']['member_note']?></textarea>
+                <?php echo form_close()?>
               </div>
             </div>
           </div>
@@ -72,24 +80,47 @@ function getfocus(){
           <div class="form-inline">
             <div class="radio">
               <label>
-                <input type="radio" name="sale_order_detail_pay_type"  value="1" checked/>
-                เงินสด
+                <?php if (@$_SESSION['pay_type']==1 || @$_SESSION['pay_type']==''): ?>
+                  <input type="radio" name="sale_order_detail_pay_type"  value="1" checked/>
+                  เงินสด
+                <?php else: ?>
+                  <?php echo form_open('sale_manage/sale_pay_type')?>
+                  <input onchange="this.form.submit()" type="radio" name="sale_order_detail_pay_type"  value="1"/>
+                  เงินสด
+                  <?php echo form_close()?>
+                <?php endif; ?>
               </label>
             </div>
-            <div class="radio">
-              <label>
-                <input type="radio" name="sale_order_detail_pay_type"  value="2"/>
-                เช็ค
-              </label>
-            </div>
-            <div class="radio">
-              <label>
-                <input type="radio" name="sale_order_detail_pay_type"  value="3"/>
-                เครดิต
-              </label>
-            </div>
-          </div>
 
+            <div class="radio">
+              <label>
+                <?php if (@$_SESSION['pay_type']==2): ?>
+                  <input type="radio" name="sale_order_detail_pay_type"  value="2" checked/>
+                  เช็ค
+                <?php else: ?>
+                  <?php echo form_open('sale_manage/sale_pay_type')?>
+                  <input onchange="this.form.submit()" type="radio" name="sale_order_detail_pay_type"  value="2"/>
+                  เช็ค
+                  <?php echo form_close()?>
+                <?php endif; ?>
+              </label>
+            </div>
+
+            <div class="radio">
+              <label>
+                <?php if (@$_SESSION['pay_type']==3): ?>
+                  <input type="radio" name="sale_order_detail_pay_type"  value="3" checked/>
+                  เครดิต
+                <?php else: ?>
+                  <?php echo form_open('sale_manage/sale_pay_type')?>
+                  <input onchange="this.form.submit()" type="radio" name="sale_order_detail_pay_type"  value="3"/>
+                  เครดิต
+                  <?php echo form_close()?>
+                <?php endif; ?>
+              </label>
+            </div>
+
+          </div>
         </td>
       </tr>
       <tr>
@@ -119,7 +150,9 @@ function getfocus(){
                 </td>
                 <td>
                   <div align="right">
-                    <input style="width: 100%;" class="text-right" type="number" step="any" name="" value="<?php echo @$_SESSION['product'][$i]['product_sale']?>">
+                    <?php echo form_open('sale_manage/sale_amount/'.$i)?>
+                    <input onchange="this.form.submit()" style="width: 100%;" class="text-right" type="number" step="any" name="sale_amount" value="<?php echo @$_SESSION['product'][$i]['product_sale']?>">
+                    <?php echo form_close()?>
                   </div>
                 </td>
                 <td><div align="center">1</div></td>
@@ -172,7 +205,9 @@ function getfocus(){
 
                 <td height="40"><div align="right"><?php echo @number_format(@array_sum(@$total)-@array_sum(@$total_buy)) ?>.00&nbsp;</div></td>
               </tr>
-            </table></td>
+            </table>
+          </td>
+          <?php echo form_open('sale_manage/sale_insert')?>
             <td valign="top"><div align="center">
               <h2 style="color:green;">รวมเงิน <?php echo @number_format(@array_sum(@$total))?>.00 บาท&nbsp;</h2>
               <input type="submit" value="ยืนยันการซื้อ" class="btn btn-success" style="width:90%; font-size:30px;">

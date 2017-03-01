@@ -1,3 +1,22 @@
+<!-- CSS -->
+<link rel="stylesheet" href="<?php echo base_url()?>js\DataTables\media\css\dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo base_url()?>js\DataTables\extensions\Buttons\css\buttons.bootstrap.min.css">
+
+<!-- jquery.dataTables -->
+<script src="<?php echo base_url()?>js\DataTables\media\js\jquery.dataTables.min.js" charset="utf-8"></script>
+<script src="<?php echo base_url()?>js\DataTables\media\js\dataTables.bootstrap.min.js" charset="utf-8"></script>
+<!-- Buttons -->
+<script src="<?php echo base_url()?>js\DataTables\extensions\Buttons\js\dataTables.buttons.min.js" charset="utf-8"></script>
+<script src="<?php echo base_url()?>js\DataTables\extensions\Buttons\js\buttons.bootstrap.min.js" charset="utf-8"></script>
+<script src="<?php echo base_url()?>js\DataTables\extensions\Buttons\js\buttons.print.min.js" charset="utf-8"></script>
+<script src="<?php echo base_url()?>js\DataTables\extensions\Buttons\js\buttons.html5.min.js" charset="utf-8"></script>
+<script src="<?php echo base_url()?>js\DataTables\extensions\Buttons\js\buttons.colVis.min.js" charset="utf-8"></script>
+<script src="<?php echo base_url()?>js\DataTables\extensions\Buttons\js\buttons.flash.min.js" charset="utf-8"></script>
+
+<link href="<?php echo base_url()?>css/kendo.common.min.css" rel="stylesheet" />
+<link href="<?php echo base_url()?>css/kendo.bootstrap.min.css" rel="stylesheet" />
+<script src="<?php echo base_url()?>js/kendo.all.min.js"></script>
+
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -8,7 +27,7 @@
     </div>
   </div>
   <!-- /.row -->
-  <table class="table table-bordered table-hover table-striped tablesorter">
+  <table class="DataTable table table-hover">
     <thead>
       <tr>
         <th width="5%"><div align="center">ลำดับ</div></th>
@@ -49,3 +68,39 @@
         </tbody>
       </table>
     </div>
+    <script type="text/javascript">
+    $.extend(true, $.fn.dataTable.defaults, {
+      "language": {
+                "sProcessing": "กำลังดำเนินการ...",
+                "sLengthMenu": "แสดง_MENU_ แถว",
+                "sZeroRecords": "ไม่พบข้อมูล",
+                "sInfo": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+                "sInfoEmpty": "แสดง 0 ถึง 0 จาก 0 แถว",
+                "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
+                "sInfoPostFix": "",
+                "sSearch": "ค้นหา:",
+                "sUrl": "",
+                "oPaginate": {
+                              "sFirst": "เริ่มต้น",
+                              "sPrevious": "ก่อนหน้า",
+                              "sNext": "ถัดไป",
+                              "sLast": "สุดท้าย"
+                }
+       }
+  });
+
+    $('.DataTable').DataTable( {
+      dom: 'Bfrtip',
+      buttons: [
+      ]
+  } );
+    </script>
+    </div>
+  </div>
+
+  <script>
+              $(document).ready(function() {
+                  $("#start").kendoDatePicker({format: "yyyy-MM-dd"});
+                  $("#end").kendoDatePicker({format: "yyyy-MM-dd"});
+              });
+  </script>

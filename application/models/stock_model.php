@@ -75,6 +75,7 @@ class stock_model extends CI_Model {
 		$this->db->join('member','member.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
 		$this->db->join('product','product.product_code = stock.stock_product');
 		$query = $this->db->get('sale_order_detail')->result_array();
+		$this->debuger->prevalue($query);
 		return $query;
 	}
 

@@ -14,10 +14,8 @@ class sale_manage extends CI_Controller {
 		@$_SESSION['product'][$num]['product_name'] = $data[0]['product_name'];
 		@$_SESSION['product'][$num]['product_buy'] = $data[0]['product_buy'];
 		@$_SESSION['product'][$num]['product_sale'] = $data[0]['product_sale'];
+		@$_SESSION['pay_type'] = $_POST['sale_order_detail_pay_type'];
 
-		// echo "<pre>";
-		// print_r($data);
-		// exit();
 		redirect('sale/sale_list');
 	}
 	public function sale_clear()
@@ -29,6 +27,13 @@ class sale_manage extends CI_Controller {
 	public function sale_insert()
 	{
 		@session_start();
+
+		if ($_SESSION['is_vat'] = 'checked') {
+			$vat = '1';
+		}
+		if (@$_SESSION['pay_type']=='') {
+			@$_SESSION['pay_type'] = 1;
+		}
 		$query =  $this->db
 		->get('sale_order_detail')
 		->num_rows();
@@ -38,42 +43,40 @@ class sale_manage extends CI_Controller {
 			'sale_order_detail_date' => date('Y-m-d'),
 			'sale_order_detail_time' => date('H:i:s'),
 			'sale_order_detail_vat' => 0,
-			'sale_order_detail_vat_status' => 0,
-			'sale_order_detail_pay_type' => $_POST['sale_order_detail_pay_type'],
+			'sale_order_detail_vat_status' => $vat,
+			'sale_order_detail_pay_type' => @$_SESSION['pay_type'],
 			'sale_order_detail_shop' => @$_SESSION['employees_shop'],
 		);
 		$this->db->insert('sale_order_detail',$sale_order);
 		$sale_order_id = $this->db->insert_id();
 
 		$member = array(
-			'member_fullname' => $_POST['member_fullname'],
-			'member_address' => $_POST['member_address'],
-			'member_phone' => $_POST['member_phone'],
-			'member_note' => $_POST['member_note'],
+			'member_fullname' => @$_SESSION['member']['member_fullname'],
+			'member_address' => @$_SESSION['member']['member_address'],
+			'member_phone' => @$_SESSION['member']['member_phone'],
+			'member_note' => @$_SESSION['member']['member_note'],
 			'sale_order_detail_id	' => $sale_order_id,
 		);
 		$this->db->insert('member',$member);
 
-		$product = $this->product_model->product_list_by_code($_POST['product_code'][0]);
-		// $this->debuger->prevalue($product);
-
-		for($i=0;$i<count(@$_POST['product_code']);$i++){
-			$product = $this->product_model->product_list_by_code($_POST['product_code'][$i]);
+		for($i=0;$i<count(@$_SESSION['product']);$i++){
 			$stock = array(
-				'stock_product' => @$_POST['product_code'][$i],
+				'stock_product' => @$_SESSION['product'][$i]['product_code'],
 				'stock_type' => "out",
 				'stock_amount' => 1,
 				'stock_date' => date('Y-m-d'),
 				'stock_time' => date('H:i:s'),
 				'stock_employees' => @$_SESSION['employees_id'],
 				'stock_shop' => @$_SESSION['employees_shop'],
-				'stock_price' => $product[0]['product_sale'],
+				'stock_price' => @$_SESSION['product'][$i]['product_sale'],
 				'sale_order_detail_id' => $sale_order_id,
 			);
 			$this->db->insert('stock',$stock);
 		}
-		@session_start();
 		unset($_SESSION['product']);
+		unset($_SESSION['member']);
+		unset($_SESSION['pay_type']);
+		unset($_SESSION['is_vat']);
 		redirect('sale/sale_list');
 	}
 	public function sale_vat()
@@ -90,4 +93,43 @@ class sale_manage extends CI_Controller {
 		redirect($this->agent->referrer(), 'refresh');
 	}
 
+	public function sale_member_fullname()
+	{
+		@session_start();
+		@$_SESSION['member']['member_fullname'] = $_POST['member_fullname'];
+		redirect('sale/sale_list');
+	}
+	public function sale_member_phone()
+	{
+		@session_start();
+		@$_SESSION['member']['member_phone'] = $_POST['member_phone'];
+		redirect('sale/sale_list');
+	}
+	public function sale_member_address()
+	{
+		@session_start();
+		@$_SESSION['member']['member_address'] = $_POST['member_address'];
+		redirect('sale/sale_list');
+	}
+	public function sale_member_note()
+	{
+		@session_start();
+		@$_SESSION['member']['member_note'] = $_POST['member_note'];
+		redirect('sale/sale_list');
+	}
+
+	public function sale_amount()
+	{
+		@session_start();
+		$i = $this->uri->segment(3);
+		@$_SESSION['product'][$i]['product_sale'] = $_POST['sale_amount'];
+		redirect('sale/sale_list');
+	}
+
+	public function sale_pay_type()
+	{
+		@session_start();
+		@$_SESSION['pay_type'] = $_POST['sale_order_detail_pay_type'];
+		redirect('sale/sale_list');
+	}
 }
