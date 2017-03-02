@@ -14,6 +14,7 @@ class sale_manage extends CI_Controller {
 		@$_SESSION['product'][$num]['product_name'] = $data[0]['product_name'];
 		@$_SESSION['product'][$num]['product_buy'] = $data[0]['product_buy'];
 		@$_SESSION['product'][$num]['product_sale'] = $data[0]['product_sale'];
+		@$_SESSION['product'][$num]['product_normal_sale'] = $data[0]['product_sale'];
 		@$_SESSION['pay_type'] = $_POST['sale_order_detail_pay_type'];
 
 		redirect('sale/sale_list');
@@ -31,6 +32,13 @@ class sale_manage extends CI_Controller {
 		if ($_SESSION['is_vat'] = 'checked') {
 			$vat = '1';
 		}
+		if ($_SESSION['is_discount'] = 'checked') {
+			$discount = '1';
+			$discount_value = $_SESSION['discount_value'];
+		} else {
+			$discount = '0';
+			$discount_value = 0;
+		}
 		if (@$_SESSION['pay_type']=='') {
 			@$_SESSION['pay_type'] = 1;
 		}
@@ -44,6 +52,8 @@ class sale_manage extends CI_Controller {
 			'sale_order_detail_time' => date('H:i:s'),
 			'sale_order_detail_vat' => 0,
 			'sale_order_detail_vat_status' => $vat,
+			'sale_order_detail_discount' => $discount_value,
+			'sale_order_detail_discount_status' => $discount,
 			'sale_order_detail_pay_type' => @$_SESSION['pay_type'],
 			'sale_order_detail_shop' => @$_SESSION['employees_shop'],
 		);
@@ -77,6 +87,8 @@ class sale_manage extends CI_Controller {
 		unset($_SESSION['member']);
 		unset($_SESSION['pay_type']);
 		unset($_SESSION['is_vat']);
+		unset($_SESSION['is_discount']);
+		unset($_SESSION['discount_value']);
 		redirect('sale/sale_list');
 	}
 	public function sale_vat()
@@ -92,7 +104,25 @@ class sale_manage extends CI_Controller {
 
 		redirect($this->agent->referrer(), 'refresh');
 	}
+	public function sale_discount()
+	{
+		@session_start();
+		$input = $this->input->post();
+		$_SESSION['discount_value'] = $input['discount_value'];
 
+		redirect($this->agent->referrer(), 'refresh');
+	}
+	public function is_discount()
+	{
+		@session_start();
+		if ($_SESSION['is_discount']=='') {
+			$_SESSION['is_discount'] = 'checked';
+		} elseif ($_SESSION['is_discount'] = 'checked') {
+			$_SESSION['is_discount'] = '';
+		}
+
+		redirect($this->agent->referrer(), 'refresh');
+	}
 	public function sale_member_fullname()
 	{
 		@session_start();

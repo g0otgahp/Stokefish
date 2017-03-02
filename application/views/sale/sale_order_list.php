@@ -27,16 +27,16 @@
     </div>
   </div>
   <!-- /.row -->
-  <table class="DataTable table table-hover">
+  <table class="DataTable table table-hover table-bordered">
     <thead>
       <tr>
         <th width="5%"><div align="center">ลำดับ</div></th>
-        <th width="10%"><div align="center">วันที่<i class="fa fa-sort"></i></div></th>
-        <th width="10%"><div align="center">เวลา<i class="fa fa-sort"></i></div></th>
-        <th width="25%"><div align="center">เลขที่บิล <i class="fa fa-sort"></i></div></th>
-        <th width="15%"><div align="center">สถานะ</div></th>
+        <th width="10%"><div align="center">เลขที่บิล </div></th>
+        <th width="10%"><div align="center">วันที่</div></th>
+        <th width="10%"><div align="center">เวลา</div></th>
         <th width="20%"><div align="center">หมายเหตุ</div></th>
-        <th width="20%"><div align="center">ตัวเลือก</div></th>
+        <th width="10%"><div align="center">สถานะ</div></th>
+        <th width="15%"><div align="center">ตัวเลือก</div></th>
       </tr>
     </thead>
     <tbody>
@@ -45,15 +45,17 @@
       <?php foreach($sale_order_detail as $row){ ?>
         <tr>
           <td><div align="center"><?php echo $i ?></div></td>
-          <td><?php echo $row['stock_date']?></td>
-          <td><?php echo $row['stock_time']?></td>
           <td><?php echo $row['sale_order_detail_no']?></td>
+
+          <td><?php echo $row['sale_order_detail_date']?></td>
+          <td><?php echo $row['sale_order_detail_time']?></td>
+
+          <td><?php echo $row['member_note']?></td>
           <?php if ($row['sale_order_detail_status']==0): ?>
-            <td><div align="center"><font color="red">ยกเลิกรายการแล้ว</font></td>
+            <td><div align="center"><font color="red">ยกเลิก</font></td>
             <?php else: ?>
-              <td><div align="center"><font color="green">ปกติ</font></div></td>
+              <td><div align="center"><font color="green">ชำระแล้ว</font></div></td>
             <?php endif; ?>
-            <td><?php echo $row['member_note']?></td>
             <?php if ($row['sale_order_detail_status']==0): ?>
               <td><div align="center"><?php echo anchor('stock/sale_order_detail/'.$row['sale_order_detail_id'],'<button type="button" class="btn btn-info">รายละเอียด</button>')?></div></td>
             <?php else: ?>
@@ -71,36 +73,32 @@
     <script type="text/javascript">
     $.extend(true, $.fn.dataTable.defaults, {
       "language": {
-                "sProcessing": "กำลังดำเนินการ...",
-                "sLengthMenu": "แสดง_MENU_ แถว",
-                "sZeroRecords": "ไม่พบข้อมูล",
-                "sInfo": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
-                "sInfoEmpty": "แสดง 0 ถึง 0 จาก 0 แถว",
-                "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
-                "sInfoPostFix": "",
-                "sSearch": "ค้นหา:",
-                "sUrl": "",
-                "oPaginate": {
-                              "sFirst": "เริ่มต้น",
-                              "sPrevious": "ก่อนหน้า",
-                              "sNext": "ถัดไป",
-                              "sLast": "สุดท้าย"
-                }
-       }
-  });
+        "sProcessing": "กำลังดำเนินการ...",
+        "sLengthMenu": "แสดง_MENU_ แถว",
+        "sZeroRecords": "ไม่พบข้อมูล",
+        "sInfo": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+        "sInfoEmpty": "แสดง 0 ถึง 0 จาก 0 แถว",
+        "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
+        "sInfoPostFix": "",
+        "sSearch": "ค้นหา:",
+        "sUrl": "",
+        "oPaginate": {
+          "sFirst": "เริ่มต้น",
+          "sPrevious": "ก่อนหน้า",
+          "sNext": "ถัดไป",
+          "sLast": "สุดท้าย"
+        }
+      }
+    });
 
-    $('.DataTable').DataTable( {
-      dom: 'Bfrtip',
-      buttons: [
-      ]
-  } );
+    $('.DataTable').DataTable();
     </script>
-    </div>
   </div>
+</div>
 
-  <script>
-              $(document).ready(function() {
-                  $("#start").kendoDatePicker({format: "yyyy-MM-dd"});
-                  $("#end").kendoDatePicker({format: "yyyy-MM-dd"});
-              });
-  </script>
+<script>
+$(document).ready(function() {
+  $("#start").kendoDatePicker({format: "yyyy-MM-dd"});
+  $("#end").kendoDatePicker({format: "yyyy-MM-dd"});
+});
+</script>

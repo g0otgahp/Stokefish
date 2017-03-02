@@ -69,13 +69,12 @@ class stock_model extends CI_Model {
 
 	public function sale_order_list($shop_id)
 	{
-		$this->db->order_by('sale_order_detail_date','desc');
-		$this->db->where('sale_order_detail_shop',$shop_id);
-		$this->db->join('stock','stock.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
+		$this->db->where('sale_order_detail_shop', $shop_id);
 		$this->db->join('member','member.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
-		$this->db->join('product','product.product_code = stock.stock_product');
+		$this->db->order_by('sale_order_detail_date', 'DESC');
+		$this->db->order_by('sale_order_detail_time', 'DESC');
 		$query = $this->db->get('sale_order_detail')->result_array();
-		$this->debuger->prevalue($query);
+		// $this->debuger->prevalue($query);
 		return $query;
 	}
 
