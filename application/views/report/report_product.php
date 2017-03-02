@@ -4,6 +4,7 @@
 
 <!-- jquery.dataTables -->
 <script src="<?php echo base_url()?>js\DataTables\media\js\jquery.dataTables.min.js" charset="utf-8"></script>
+<script src="<?php echo base_url()?>js\dataTables.tableTools.js" charset="utf-8"></script>
 <script src="<?php echo base_url()?>js\DataTables\media\js\dataTables.bootstrap.min.js" charset="utf-8"></script>
 <!-- Buttons -->
 <script src="<?php echo base_url()?>js\DataTables\extensions\Buttons\js\dataTables.buttons.min.js" charset="utf-8"></script>
@@ -28,11 +29,12 @@
   <!-- /.row -->
   <?php echo form_open('report/report_product_search')?>
   <table width="90%" border="0" cellspacing="5" cellpadding="5">
+
     <tr>
       <td width="12%" align="center">เริ่มต้น</td>
-      <td width="12%" align="center"><input type="text" name="start" id="start" value="<?php echo date('Y-m-d')?>" /></td>
+      <td width="12%" align="center"><input type="text" name="start" id="start" value="<?php if(@$date['date_start']!=""){echo $date['date_start'];} else {echo date('Y-m-d');} ?>" /></td>
       <td width="12%" align="center">สิ้นสุด</td>
-      <td width="12%" align="center"><input type="text" name="end" id="end" value="<?php echo date('Y-m-d')?>" /></td>
+      <td width="12%" align="center"><input type="text" name="end" id="end" value="<?php if(@$date['date_end']!=""){echo $date['date_end'];} else {echo date('Y-m-d');} ?>" /></td>
       <td>&nbsp;</td>
       <td><input type="submit" name="button" id="button" class="btn btn-info" value="ค้นหาข้อมูล" /></td>
     </tr>
@@ -42,6 +44,9 @@
   <?php if(@$date_start!=""&&@$date_end!=""){ ?>
     <table class="DataTable table table-hover table-bordered" style="font-size:11px">
       <thead>
+        <!-- <tr>
+          <th colspan="12">ผลการค้นหา</th>
+        </tr> -->
         <tr>
           <th><div align="center">ลำดับ</div></th>
           <th>รหัสสินค้า</th>
@@ -57,13 +62,7 @@
           <th><div align="center">กำไรหลังหักส่วนลด </div></th>
         </tr>
       </thead>
-      <tfoot>
-    <tr>
-      <td colspan="4"></td>
-      <td class="text-center"><span class="text-success"><strong>ยอดรวม</strong></span></td>
-      <td></td>
-    </tr>
-  </tfoot>
+
       <tbody>
         <?php $confirm = array( 'onclick' => "return confirm('ต้องการลบข้อมูลหรือไม่?')");?>
         <?php $i = 1;
@@ -74,36 +73,58 @@
         <?php foreach($product as $row){ ?>
           <tr>
             <td><div align="center"><?php echo $i ?></div></td>
-            <td><?php echo $row['product_code']?></td>
-            <td><?php echo $row['product_name']?></td>
+            <td><?php echo @$row['product_code']?></td>
+            <td><?php echo @$row['product_name']?></td>
             <td class="text-right">
 
-                <?php
-                $this->db->where('stock_product', $row['product_code']);
-                $this->db->where('stock_type',"out");
-                $this->db->where('stock_date >=',$date_start);
-                $this->db->where('stock_date <=',$date_end);
-                $query = $this->db->get('stock');
-                $stock_amount = $query->result_array();
-                echo number_format(@$row['sum_stock']['stock_amount']);
-                @$total[] = @$row['sum_stock']['stock_price'];
-                @$amount[] = $row['sum_stock']['stock_amount']; ?>
+              <?php
+              $this->db->where('stock_product', @$row['product_code']);
+              $this->db->where('stock_type',"out");
+              $this->db->where('stock_date >=',@$date_start);
+              $this->db->where('stock_date <=',@$date_end);
+              $query = $this->db->get('stock');
+              @$stock_amount = @$query->result_array();
+              echo number_format(@$row['sum_stock']['stock_amount']);
+              @$total[] = @$row['sum_stock']['stock_price'];
+              @$amount[] = $row['sum_stock']['stock_amount']; ?>
 
             </td>
-            <td><?php echo $row['product_unit'] ?></td>
-            <td class="text-right"><?php echo number_format($row['product_buy']) ?>  </td>
-            <td class="text-right"><?php echo number_format($row['product_sale']) ?></td>
-            <td class="text-right"><?php  $total_buy = ($row['sum_stock']['stock_amount']*$row['product_buy']); echo number_format($total_buy) ?>  </td>
-            <td class="text-right"><?php $total_sale = $row['sum_stock']['stock_amount']*$row['product_sale']; echo number_format($total_sale)  ?></td>
-            <td class="text-right"><?php echo number_format($total_sale-$total_buy) ?></td>
-            <?php// $total_order_sale = $row['sum_stock']['stock_price'];  ?>
-            <?php $total_order_sale = array_sum($total);  ?>
-            <td class="text-right"><?php echo number_format($total_sale-$total_order_sale)?> </td>
-            <td class="text-right"><?php echo number_format($total_order_sale-$total_buy)?> </td>
+            <td><?php echo @$row['product_unit'] ?></td>
+            <td class="text-right"><?php echo number_format(@$row['product_buy']) ?>  </td>
+            <td class="text-right"><?php echo number_format(@$row['product_sale']) ?></td>
+            <td class="text-right"><?php  @$total_buy = (@$row['sum_stock']['stock_amount']*@$row['product_buy']); echo number_format(@$total_buy) ?>  </td>
+            <td class="text-right"><?php @$total_sale = @$row['sum_stock']['stock_amount']*@$row['product_sale']; echo number_format(@$total_sale)  ?></td>
+            <td class="text-right"><?php echo number_format(@$total_sale-@$total_buy) ?></td>
+            <?php @$total_order_sale = @$row['sum_stock']['stock_price'];  ?>
+            <?php //$total_order_sale = number_format(array_sum($total));  ?>
+            <td class="text-right"><?php echo number_format(@$total_sale-@$total_order_sale)?> </td>
+            <td class="text-right"><?php echo number_format(@$total_order_sale-@$total_buy)?> </td>
           </tr>
+          <?php
+          @$product_buy[] = @$row['product_buy'];
+          @$product_sale[] = @$row['product_sale'];
+          @$all_total_buy[] = @$total_buy;
+          @$all_total_sale[] = @$total_sale;
+          @$all_total_order_sale[] = @$total_order_sale;
+          ?>
           <?php $i++ ?>
           <?php } ?>
         </tbody>
+        <tfoot>
+          <tr>
+
+            <th colspan="4" style="background:#dcdcdc"></th>
+            <th class="text-center"><span class="text-success"><strong>ยอดรวม</strong></span></th>
+            <th class="text-right"><?php echo  number_format(@array_sum(@$product_buy)) ?></th>
+            <th class="text-right"><?php echo  number_format(@array_sum(@$product_sale)) ?></th>
+            <th class="text-right"><?php echo  number_format(@array_sum(@$all_total_buy)) ?></th>
+            <th class="text-right"><?php echo  number_format(@array_sum(@$all_total_sale)) ?></th>
+            <th class="text-right"><?php echo  number_format(@array_sum(@$all_total_sale) - @array_sum(@$all_total_buy) ) ?></th>
+            <th class="text-right"><?php echo  number_format(@array_sum(@$all_total_sale) - @array_sum(@$all_total_order_sale) ) ?></th>
+            <th class="text-right"><?php echo  number_format(@array_sum(@$all_total_order_sale) - @array_sum(@$all_total_buy) ) ?></th>
+
+          </tr>
+        </tfoot>
       </table>
       <?php } ?>
     </div>
@@ -128,7 +149,15 @@
         }
       }
     });
-
+    var dateForm = $("#start").val();
+    var dateTo = $("#end").val();
+ $("#start").change(function() {
+   var dateForm = $("#start").val();
+ });
+ $("#end").change(function() {
+   var dateTo = $("#end").val();
+ });
+ moment.locale('th');
     $('.DataTable').DataTable( {
       dom: 'Bfrtip',
       // buttons: [
@@ -136,22 +165,27 @@
       //   'print'
       // ]
       buttons: [
-          'excel',
-            {
-                extend: 'print',
-                customize: function ( win ) {
-                    $(win.document.body)
-                        .css( 'font-size', '16px' )
-                        .prepend(
-                            '<p>สินค้า ... รายการ ต้นทุนรวม ... บาท กำไรก่อนหักส่วนลด .. บาท</p><p>ส่วนลดต่อรายการขายรวม ... บาท ส่วนลดต่อใบสั่งขายรวม ... บาท กำไรหลักหักส่วนลด ... บาท</p>'
-                        );
+        {
+          extend: 'excel',
+        footer: true,
+      },
+        {
+          extend: 'print',
+          footer: true,
+          title: "",
+          customize: function ( win ) {
+            $(win.document.body)
+                .css( 'font-size', '16px' )
+                .prepend(
+                    '<p> ผลการค้นหา จากวันที่ '+moment(dateForm).format('LL')+' ถึงวันที่ '+moment(dateTo).format('LL')+'</p>'
+                );
 
-                    $(win.document.body).find( 'table' )
-                        .addClass( 'compact' )
-                        .css( 'font-size', '11px' );
-                }
-            }
-        ]
+            $(win.document.body).find( 'table' )
+            // .addClass( 'compact' )
+            .css( 'font-size', '11px' );
+          }
+        }
+      ]
     } );
     </script>
   </div>

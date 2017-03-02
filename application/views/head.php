@@ -20,6 +20,8 @@
 
 <!-- JavaScript -->
 <script src="<?php echo base_url()?>js/jquery-1.10.2.js"></script>
+<script src="<?php echo base_url()?>js/moment.js"></script>
+<script src="<?php echo base_url()?>js/moment-with-locales.js"></script>
 <script src="<?php echo base_url()?>js/bootstrap.js"></script>
 
 <!-- Page Specific Plugins -->

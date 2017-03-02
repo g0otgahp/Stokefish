@@ -50,6 +50,7 @@ class report extends CI_Controller {
 			);
 			$data['product'] = $this->product_model->report_product_list($data);
 			$data['page'] = "report/report_product";
+			$data['date'] = $data;
 			$this->load->view('head',$data);
 		}else{
 			redirect('login/index');
