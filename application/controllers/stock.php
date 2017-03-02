@@ -100,6 +100,7 @@ class stock extends CI_Controller {
 	{
 		@session_start();
 		if(@$_SESSION['employees_id']!=""){
+			unset($_SESSION['sale_order_detail_id']);
 			$data['sale_order_detail'] = $this->stock_model->sale_order_list($_SESSION['employees_shop']);
 			$data['page'] = "sale/sale_order_list";
 			$this->load->view('head',$data);

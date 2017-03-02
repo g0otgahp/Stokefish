@@ -9,6 +9,4 @@ class sale_model extends CI_Model {
 		$query = $this->db->get('product');
 		return $query->result_array();
 	}
-
-
 }

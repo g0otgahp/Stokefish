@@ -29,8 +29,8 @@ function getfocus(){
             </div>
             <div class="collapse navbar-collapse">
               <div class="navbar-form navbar-right">
-                <a class="btn btn-warning">แก้ไข</a>
-                <a class="btn btn-primary">พิมพ์</a>
+                <a href="<?php echo site_url('sale/sale_edit/'.$sale_order_detail[0]['sale_order_detail_id']);?>" class="btn btn-warning">แก้ไข</a>
+                <a href="<?php echo site_url('sale/sale_result/'.$sale_order_detail[0]['sale_order_detail_id']);?>" class="btn btn-primary">พิมพ์</a>
               </div>
             </div>
           </div>

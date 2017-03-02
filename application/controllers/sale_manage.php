@@ -22,7 +22,15 @@ class sale_manage extends CI_Controller {
 	public function sale_clear()
 	{
 		@session_start();
+		unset($_SESSION['sale_order_detail_id']);
 		unset($_SESSION['product']);
+		unset($_SESSION['unstock']);
+		unset($_SESSION['member']);
+		unset($_SESSION['pay_type']);
+		unset($_SESSION['is_vat']);
+		unset($_SESSION['is_discount']);
+		unset($_SESSION['discount_value']);
+		unset($_SESSION['stock']);
 		redirect('sale/sale_list');
 	}
 	public function sale_insert()
@@ -34,7 +42,7 @@ class sale_manage extends CI_Controller {
 		}
 		if ($_SESSION['is_discount'] = 'checked') {
 			$discount = '1';
-			$discount_value = $_SESSION['discount_value'];
+			$discount_value = @$_SESSION['discount_value'];
 		} else {
 			$discount = '0';
 			$discount_value = 0;
@@ -45,6 +53,8 @@ class sale_manage extends CI_Controller {
 		$query =  $this->db
 		->get('sale_order_detail')
 		->num_rows();
+
+		if ($_SESSION['sale_order_detail_id']=='') {
 		$InvoiceNo = "IN".sprintf("%05d", ($query+1));
 		$sale_order = array(
 			'sale_order_detail_no' => $InvoiceNo,
@@ -59,7 +69,18 @@ class sale_manage extends CI_Controller {
 		);
 		$this->db->insert('sale_order_detail',$sale_order);
 		$sale_order_id = $this->db->insert_id();
-
+		} else {
+		$sale_order = array(
+			'sale_order_detail_vat_status' => $vat,
+			'sale_order_detail_discount' => $discount_value,
+			'sale_order_detail_discount_status' => $discount,
+			'sale_order_detail_pay_type' => @$_SESSION['pay_type'],
+			'sale_order_detail_shop' => @$_SESSION['employees_shop'],
+		);
+		$this->db->where('sale_order_detail_id',$_SESSION['sale_order_detail_id']);
+		$this->db->update('sale_order_detail',$sale_order);
+}
+		if ($_SESSION['sale_order_detail_id']=='') {
 		$member = array(
 			'member_fullname' => @$_SESSION['member']['member_fullname'],
 			'member_address' => @$_SESSION['member']['member_address'],
@@ -68,8 +89,34 @@ class sale_manage extends CI_Controller {
 			'sale_order_detail_id	' => $sale_order_id,
 		);
 		$this->db->insert('member',$member);
-
+		} else {
+			$member = array(
+				'member_fullname' => @$_SESSION['member']['member_fullname'],
+				'member_address' => @$_SESSION['member']['member_address'],
+				'member_phone' => @$_SESSION['member']['member_phone'],
+				'member_note' => @$_SESSION['member']['member_note'],
+				'sale_order_detail_id	' => $_SESSION['sale_order_detail_id'],
+		);
+		$this->db->where('member_id',@$_SESSION['member']['member_id']);
+		$this->db->update('member',$member);
+}
+	if ($_SESSION['sale_order_detail_id']=='') {
+	for($i=0;$i<count(@$_SESSION['product']);$i++)
+		$stock = array(
+			'stock_product' => @$_SESSION['product'][$i]['product_code'],
+			'stock_type' => "out",
+			'stock_amount' => 1,
+			'stock_date' => date('Y-m-d'),
+			'stock_time' => date('H:i:s'),
+			'stock_employees' => @$_SESSION['employees_id'],
+			'stock_shop' => @$_SESSION['employees_shop'],
+			'stock_price' => @$_SESSION['product'][$i]['product_sale'],
+			'sale_order_detail_id' => $sale_order_id,
+		);
+		$this->db->insert('stock',$stock);
+} else {
 		for($i=0;$i<count(@$_SESSION['product']);$i++){
+			if (@$_SESSION['stock'][$i]['stock_id']=='') {
 			$stock = array(
 				'stock_product' => @$_SESSION['product'][$i]['product_code'],
 				'stock_type' => "out",
@@ -79,17 +126,44 @@ class sale_manage extends CI_Controller {
 				'stock_employees' => @$_SESSION['employees_id'],
 				'stock_shop' => @$_SESSION['employees_shop'],
 				'stock_price' => @$_SESSION['product'][$i]['product_sale'],
-				'sale_order_detail_id' => $sale_order_id,
+				'sale_order_detail_id' => $_SESSION['sale_order_detail_id'],
 			);
 			$this->db->insert('stock',$stock);
+		} else {
+			$stock = array(
+				'stock_product' => @$_SESSION['product'][$i]['product_code'],
+				'stock_type' => "out",
+				'stock_amount' => 1,
+				'stock_date' => date('Y-m-d'),
+				'stock_time' => date('H:i:s'),
+				'stock_employees' => @$_SESSION['employees_id'],
+				'stock_shop' => @$_SESSION['employees_shop'],
+				'stock_price' => @$_SESSION['product'][$i]['product_sale'],
+				'sale_order_detail_id' => $_SESSION['sale_order_detail_id'],
+			);
+			$this->db->where('stock_id',$_SESSION['stock'][$i]['stock_id']);
+			$this->db->update('stock',$stock);
 		}
+	}
+}
+		foreach ($_SESSION['unstock'] as $row) {
+			$this->db->delete('stock',$_SESSION['unstock']['stock_id']);
+		}
+
+
 		unset($_SESSION['product']);
+		unset($_SESSION['unstock']);
 		unset($_SESSION['member']);
 		unset($_SESSION['pay_type']);
 		unset($_SESSION['is_vat']);
 		unset($_SESSION['is_discount']);
 		unset($_SESSION['discount_value']);
-		redirect('sale/sale_list');
+		unset($_SESSION['stock']);
+		if ($_SESSION['sale_order_detail_id']=='') {
+			redirect('stock/sale_order_detail/'.$sale_order_id);
+		} else {
+			redirect('stock/sale_order_detail/'.$_SESSION['sale_order_detail_id']);
+		}
 	}
 	public function sale_vat()
 	{

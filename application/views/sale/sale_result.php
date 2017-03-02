@@ -12,112 +12,177 @@ top: 0%;">
 </div>
 <page size="A4" style="color: #000;">
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12" align="center">
       <h1>พญาปลามังกร Bhuvarat Fishing Net.</h1>
-        <li class="active"><i class="fa fa-sitemap"></i> ใบเสร็จ เลขที่ : <?php echo $sale_order_detail[0]['sale_order_detail_no']?></li>
-        <li class="active"><i class="fa fa-sitemap"></i>วันที่ : <?php echo $sale_order_detail[0]['sale_order_detail_date']?></li>
+      <h1>ใบเสร็จ</h1>
+
     </div>
   </div>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td>
-        <div align="center"><h3>รายละเอียดใบเสร็จ</h3></div><br>
-      </td>
-    </tr>
-    <tr>
-      <td height="50">
-        <div class="row">
-          <div class="col-xs-4 col-md-4">
-            <div class="form-group">
-              ชื่อ :<?php echo $sale_order_detail[0]['member_fullname']?>
-            </div>
+  <div class="col-md-5">
+    <div class="row">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">รายละเอียดการขาย</h3>
           </div>
-          <div class="col-xs-4 col-md-4">
-            <div class="form-group">
-              เบอร์โทรศัพท์ :<?php echo $sale_order_detail[0]['member_phone']?>
-            </div>
-          </div>
-          <div class="col-xs-4 col-md-4">
-            <div class="form-group">
-              <?php if ($sale_order_detail[0]['sale_order_detail_pay_type']==1): ?>
-                <div class="form-group">
-                  ประเภท : เงินสด
-                </div>
-              <?php elseif($sale_order_detail[0]['sale_order_detail_pay_type']==2): ?>
-                <div class="form-group">
-                  ประเภท : เช็ค
-                </div>
-              <?php else: ?>
-                <div class="form-group">
-                  ประเภท : เครดิต
-                </div>
-              <?php endif; ?>
-            </div>
-          </div>
-          <!-- <div class="col-md-1">
-            <div class="form-group">
-              <?php if ($sale_order_detail[0]['sale_order_detail_vat']==1): ?>
-                <div class="form-group btn btn-warning">
-                  VAT
-                </div>
-              <?php else: ?>
-                <div class="form-group btn btn-info">
-                  ไม่ VAT
-                </div>
-              <?php endif; ?>
-            </div>
-          </div> -->
+          <ul class="list-group">
+            <li class="list-group-item">เลขที่ใบเสร็จ: <?php echo $sale_order_detail[0]['sale_order_detail_no'] ?></li>
+    <li class="list-group-item">วันที่สั่งขาย: <?php echo $sale_order_detail[0]['sale_order_detail_date']." เวลา ".$sale_order_detail[0]['sale_order_detail_time'] ; ?></li>
+    <li class="list-group-item">
+      ประเภทการชำระ:
+      <?php if ($sale_order_detail[0]['sale_order_detail_pay_type']==1): ?>
+      เงินสด
+    <?php elseif($sale_order_detail[0]['sale_order_detail_pay_type']==2): ?>
+      เช็ค
+    <?php else: ?>
+      เครดิต
+    <?php endif; ?>
+  </li>
         </div>
-      </td>
-    </tr>
-    <tr>
-      <td height="50">
-        <div class="row">
-          <div class="col-xs-4 col-md-4">
-            <div class="form-group">
-              ที่อยู่ :<?php echo $sale_order_detail[0]['member_address']?>
-            </div>
+    </div>
+  </div>
+
+  <div class="col-md-offset-1 col-md-5">
+    <div class="row">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">รายละเอียดลูกค้า</h3>
           </div>
-          <div class="col-xs-4 col-md-4">
-            <div class="form-group">
-              หมายเหตุ :<?php echo $sale_order_detail[0]['member_note']?>
-            </div>
-          </div>
+          <ul class="list-group">
+          <li class="list-group-item">ชื่อ :<?php echo $sale_order_detail[0]['member_fullname']; ?></li>
+          <li class="list-group-item">เบอร์โทรศัพท์ :<?php echo $sale_order_detail[0]['member_phone'];?></li>
+          <li class="list-group-item">ที่อยู่ :<?php echo $sale_order_detail[0]['member_address'];?></li>
+          <li class="list-group-item">หมายเหตุ :<?php echo $sale_order_detail[0]['member_note'];?></li>
+
+          </ul>
         </div>
-      </td>
-    </tr>
-    <tr>
-      <td><table width="100%" border="1" cellspacing="0" cellpadding="0">
-        <tr>
-          <td height="40" colspan="5">&nbsp;&nbsp;&nbsp;<strong>รายการสินค้า ( Product List )</strong></td>
-        </tr>
-        <tr>
-          <td width="9%" align="center">ลำดับ</td>
-          <td width="50%" align="center">รายการสินค้า</td>
-          <td width="19%" align="center">ราคาต่อหน่วย</td>
-          <td width="9%" align="center">จำนวน</td>
-          <td width="13%" height="40" align="center">ราคารวม</td>
-        </tr>
-          <?php $i=1; foreach ($sale_order_detail as $row): ?>
-          <?php $total[] = @$row['product_sale']?>
-          <?php @$row['product_key'] = date('YmdHis');?>
-          <?php if(@$row['product_key']!=""){ ?>
-            <tr>
-              <td><div align="center"><?php echo $i; ?></div></td>
-              <td>&nbsp;<?php echo @$row['product_code']?> <?php echo @$row['product_name']?></td>
-              <td><div align="right"><?php echo @$row['product_sale']?>.00&nbsp;</div></td>
-              <td><div align="center">1</div></td>
-              <td height="40"><div align="right"><?php echo @$row['product_sale']?>.00&nbsp;</div></td>
-            </tr>
-            <?php } ?>
-            <?php $i++; endforeach; ?>
-            <tr>
-              <td colspan="2" align="center"><strong>รวมทั้งหมด</strong></td>
-              <td><div align="right"><?php echo @number_format(@array_sum(@$total))?>.00&nbsp;</div></td>
-              <td><div align="center"><?php echo count($sale_order_detail);?></div></td>
-              <td height="40"><div align="right"><?php echo @number_format(@array_sum(@$total))?>.00&nbsp;</div></td>
-            </tr>
-          </table></td>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">รายการสินค้า ( Product List )</h3>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th width="9%" class="text-center">ลำดับ</th>
+            <th width="30%">รายการสินค้า</th>
+            <th width="10%" class="text-right">ราคาทุน</th>
+            <th width="15%" class="text-right">ราคาต่อหน่วย</th>
+            <th width="18%" class="text-right">ราคาสั่งขายต่อหน่วย</th>
+            <th width="9%" class="text-right">จำนวน</th>
+            <th width="20%" class="text-right">ราคารวม</th>
           </tr>
-        </table>
+        </thead>
+        <tbody>
+          <?php $i=1; foreach ($sale_order_detail as $row): ?>
+            <?php $total[] = @$row['stock_price']?>
+            <?php $buy[] = @$row['product_buy']?>
+            <?php @$row['product_key'] = date('YmdHis');?>
+            <?php if(@$row['product_key']!=""){ ?>
+              <tr>
+                <td class="text-center"><?php echo $i; ?></td>
+                <td>
+                  <?php echo @$row['product_code']." - ".@$row['product_name']?>
+                </td>
+                <td class="text-right">
+                  <?php echo @$row['product_buy']?>.00
+                </td>
+                <td class="text-right">
+                  <?php echo @$row['product_sale']?>.00
+                </td>
+                <td class="text-right">
+                  <?php echo @$row['stock_price']?>.00
+                </td>
+                <td class="text-right">1</td>
+                <td class="text-right">
+                  <?php echo @$row['stock_price']?>.00
+                </td>
+              </tr>
+              <?php } ?>
+              <?php $i++; endforeach; ?>
+              <tr>
+                <td colspan="6" class="text-right"><strong>รวมทั้งหมด</strong></td>
+                <td class="text-right"><?php echo @number_format(@array_sum(@$total))?>.00</td>
+              </tr>
+              <tr>
+                <td colspan="6" class="text-right"><strong>ส่วนลด</strong></td>
+                <td class="text-right">
+                  <?php if ($sale_order_detail[0]['sale_order_detail_discount_status']==1): ?>
+                  <?php echo $sale_order_detail[0]['sale_order_detail_discount']; ?>.00
+                  <?php else: ?>
+                    -
+                  <?php endif; ?>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6" class="text-right"><strong>หลังหักส่วนลด</strong></td>
+                <td class="text-right">
+                  <?php
+                  if ($sale_order_detail[0]['sale_order_detail_discount_status']==1) {
+                    if ($sale_order_detail[0]['sale_order_detail_vat_status']==1) {
+                      echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount'])-(@array_sum(@$total)*7/100));
+                    } else {
+                      echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount']));
+                    }
+                  } else {
+                    if ($sale_order_detail[0]['sale_order_detail_vat_status']==1) {
+                      echo  @number_format(@array_sum(@$total)-(@array_sum(@$total)*7/100));
+                    } else {
+                      echo  @number_format(@array_sum(@$total));
+                    }
+                  }
+                  ?>.00</div></td>
+                </tr>
+                <tr>
+                  <td colspan="6" class="text-right">
+                    <strong> ภาษีมูลค่าเพิ่ม 7% </strong>
+                  </td>
+                  <td class="text-right">
+                    <?php
+                    if ($sale_order_detail[0]['sale_order_detail_vat_status']) {
+                      echo @number_format(@array_sum(@$total)*7/100).".00";
+                    } else {
+                      echo "- ";
+                    }
+                    ?>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6" class="text-right"><strong>ยอดสุทธิ</strong></td>
+                  <td bgcolor="#88d660" class="text-right">
+                    <strong>
+                    <?php
+                    if (@$_SESSION['is_discount']=='checked') {
+                      echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount']));
+                    } else {
+                      echo  @number_format(@array_sum(@$total));
+                    }
+                    ?>.00
+                  </strong>
+                </td>
+                  </tr>
+                  <tr>
+                    <td colspan="6" class="text-right"><strong>ต้นทุน</strong></td>
+
+                    <td  class="text-right"><?php echo @number_format(@array_sum(@$buy))?>.00</td>
+                  </tr>
+                  <tr>
+                    <td colspan="6" class="text-right"><strong>กำไร</strong></td>
+
+                    <td  class="text-right">
+                      <?php
+                      if ($sale_order_detail[0]['sale_order_detail_discount_status']==1) {
+                        echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount'])-@array_sum(@$buy));
+                      } else {
+                        echo  @number_format(@array_sum(@$total)-@array_sum(@$buy));
+                      }
+                      ?>
+                      .00
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 </page>

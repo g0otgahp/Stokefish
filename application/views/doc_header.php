@@ -7,6 +7,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
   <title>ใบเสร็จ</title>
+  <link href="<?php echo base_url()?>css/sb-admin.css" rel="stylesheet">
+  <link rel="stylesheet" href="<?php echo base_url()?>font-awesome/css/font-awesome.min.css">
   <link href="<?php echo base_url()?>css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="<?php echo base_url()?>css\fontawesome321\css\font-awesome.min.css" rel="stylesheet">
   <link href="<?php echo base_url()?>doc_css/bootstrap/css/bootstrap.min" rel="stylesheet">
