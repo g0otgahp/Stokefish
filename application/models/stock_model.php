@@ -95,4 +95,21 @@ class stock_model extends CI_Model {
 		$query = $this->db->get('sale_order_detail')->result_array();
 		return $query;
 	}
+
+	public function order_detail($order_id)
+	{
+		$this->db->order_by('sale_order_detail_date','desc');
+		$this->db->where('sale_order_detail.sale_order_detail_id', $order_id);
+		$this->db->join('member','member.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
+		$query = $this->db->get('sale_order_detail')->result_array();
+		return $query;
+	}
+
+	public function order_item($order_id)
+	{
+		$this->db->where('stock.sale_order_detail_id',$order_id);
+		$this->db->join('product','stock.stock_product = product.product_code');
+		$query = $this->db->get('stock')->result_array();
+		return $query;
+	}
 }

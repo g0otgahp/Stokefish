@@ -13,273 +13,307 @@ function getfocus(){
         </ol>
       </div>
     </div>
-    <!-- /.row -->
-    <table width="95%" border="0" align="center" cellpadding="5" cellspacing="5">
-      <tr>
-        <td width="61%">
-          <div align="center">
-            <?php echo form_open('sale_manage/sale_list')?>
-            <input type="text" name="barcode" id="barcode" class="form-control" required autocomplete="off" style="width:90%; text-align:center;" placeholder="---- บาร์โค้ดสินค้า ----" />
-            <?php echo form_close()?>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div align="center"><h3>รายละเอียดลูกค้า</h3></div>
-        </td>
-      </tr>
-      <tr>
-        <td height="50">
-          <div class="row" align="center">
-            <div class="col-md-6">
+    <div class="row">
+      <?php //echo "<pre>" ?>
+        <?php// print_r($order_detail); ?>
+        <?php //print_r($order_item); ?>
+        <?php // print_r($_SESSION['product']); ?>
+      </div>
+      <div class="row">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
-                <?php echo form_open('sale_manage/sale_member_fullname')?>
-                <input type="text" onchange="this.form.submit()" name="member_fullname" id="member_fullname" autocomplete="off" class="form-control" placeholder="---- ชื่อ - สกุล ----" value="<?php echo @$_SESSION['member']['member_fullname']?>"/>
-                <?php echo form_close()?>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <?php echo form_open('sale_manage/sale_member_phone')?>
-                <input type="text" onchange="this.form.submit()" name="member_phone" id="member_phone" autocomplete="off" class="form-control" placeholder="---- เบอร์โทรศัพท์ ----" value="<?php echo @$_SESSION['member']['member_phone']?>"/>
+                <?php echo form_open('sale_manage/sale_list_edit')?>
+                <input type="text" name="barcode" id="barcode" class="form-control text-center" required autocomplete="off" placeholder="---- บาร์โค้ดสินค้า ----" />
                 <?php echo form_close()?>
               </div>
             </div>
           </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="row" align="center">
-            <div class="col-md-6">
-              <div class="form-group">
-                <?php echo form_open('sale_manage/sale_member_address')?>
-                <textarea col="3" rows="3" onchange="this.form.submit()" name="member_address" id="member_address" class="form-control"  placeholder="---- ที่อยู่ ----" /><?php echo @$_SESSION['member']['member_address']?></textarea>
-                <?php echo form_close()?>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <?php echo form_open('sale_manage/sale_member_note')?>
-                <textarea col="3" rows="3" onchange="this.form.submit()" name="member_note" id="member_note" class="form-control"  placeholder="---- หมายเหตุ ----" /><?php echo @$_SESSION['member']['member_note']?></textarea>
-                <?php echo form_close()?>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div align=""><h4>รูปแบบชำระเงิน</h4></div>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding:10px">
-          <div class="form-inline">
-            <div class="radio">
-              <label>
-                <?php if (@$_SESSION['pay_type']==1 || @$_SESSION['pay_type']==''): ?>
-                  <input type="radio" name="sale_order_detail_pay_type"  value="1" checked/>
-                  เงินสด
-                <?php else: ?>
-                  <?php echo form_open('sale_manage/sale_pay_type')?>
-                  <input onchange="this.form.submit()" type="radio" name="sale_order_detail_pay_type"  value="1"/>
-                  เงินสด
-                  <?php echo form_close()?>
-                <?php endif; ?>
-              </label>
-            </div>
-
-            <div class="radio">
-              <label>
-                <?php if (@$_SESSION['pay_type']==2): ?>
-                  <input type="radio" name="sale_order_detail_pay_type"  value="2" checked/>
-                  เช็ค
-                <?php else: ?>
-                  <?php echo form_open('sale_manage/sale_pay_type')?>
-                  <input onchange="this.form.submit()" type="radio" name="sale_order_detail_pay_type"  value="2"/>
-                  เช็ค
-                  <?php echo form_close()?>
-                <?php endif; ?>
-              </label>
-            </div>
-
-            <div class="radio">
-              <label>
-                <?php if (@$_SESSION['pay_type']==3): ?>
-                  <input type="radio" name="sale_order_detail_pay_type"  value="3" checked/>
-                  เครดิต
-                <?php else: ?>
-                  <?php echo form_open('sale_manage/sale_pay_type')?>
-                  <input onchange="this.form.submit()" type="radio" name="sale_order_detail_pay_type"  value="3"/>
-                  เครดิต
-                  <?php echo form_close()?>
-                <?php endif; ?>
-              </label>
-            </div>
-
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td width="70%"><table class="table" cellpadding="10" width="100%" border="1" cellspacing="0" cellpadding="0">
-          <tr>
-            <td  colspan="7">&nbsp;&nbsp;&nbsp;<strong>รายการสินค้า ( Product List )</strong></td>
-          </tr>
-          <tr>
-            <td width="5%" align="center">#</td>
-            <td width="30%" align="center">รายการสินค้า</td>
-            <td width="10%" align="center">ราคาทุน</td>
-            <td width="15%" align="center">ราคาต่อหน่วย</td>
-            <td width="15%" align="center">ราคาสั่งขายต่อหน่วย</td>
-            <td width="10%" align="center">จำนวน</td>
-            <td width="30%"  align="center">ราคารวม</td>
-          </tr>
-          <?php $index =1; for($i=0;$i<30;$i++){ ?>
-            <?php $total[] = @$_SESSION['product'][$i]['product_sale']?>
-            <?php $total_buy[] = @$_SESSION['product'][$i]['product_buy']?>
-            <?php if(@$_SESSION['product'][$i]['product_key']!=""){ ?>
-              <tr>
-                <td><div align="center"><?php echo $index; $index++; ?></div></td>
-                <td>&nbsp;<?php echo @$_SESSION['product'][$i]['product_code']?> <?php echo @$_SESSION['product'][$i]['product_name']?><input name="product_code[]" id="product_code[]" type="hidden" value="<?php echo @$_SESSION['product'][$i]['product_code']?>" /> <?php echo anchor('sale/sale_list_delete/'.@$_SESSION['product'][$i]['product_key'],'<i class="fa fa-trash-o"></i>')?></td>
-                <td>
-                  <div align="center" >
-                    <?php echo @$_SESSION['product'][$i]['product_buy']?>
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="text-center">รายละเอียดลูกค้า</h3>
+              <?php echo form_open('sale_manage/sale_member_edit')?>
+              <input type="hidden" name="member_id" value="<?php echo @$order_detail[0]['member_id']?>">
+              <div class="row" class="text-center">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input type="text" onchange="this.form.submit()" name="member_fullname" id="member_fullname" autocomplete="off" class="form-control" placeholder="---- ชื่อ - สกุล ----" value="<?php echo @$order_detail[0]['member_fullname']?>"/>
                   </div>
-                </td>
-                <td>
-                  <div align="right">
-                    <?php echo form_open('sale_manage/sale_amount/'.$i)?>
-                    <?php echo @$_SESSION['product'][$i]['product_normal_sale']?>
-                    <?php echo form_close()?>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input type="text" onchange="this.form.submit()" name="member_phone" id="member_phone" autocomplete="off" class="form-control" placeholder="---- เบอร์โทรศัพท์ ----" value="<?php echo @$order_detail[0]['member_phone']?>"/>
                   </div>
-                </td>
-                <td>
-                  <div align="right">
-                    <?php echo form_open('sale_manage/sale_amount/'.$i)?>
-                    <input onchange="this.form.submit()" style="width: 100%; background-color: #f5bca2;" class="text-right" type="number" step="any" name="sale_amount" value="<?php echo @$_SESSION['product'][$i]['product_sale']?>">
-                    <?php echo form_close()?>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <textarea col="3" rows="3" onchange="this.form.submit()" name="member_address" id="member_address" class="form-control"  placeholder="---- ที่อยู่ ----" /><?php echo @$order_detail[0]['member_address']?></textarea>
                   </div>
-                </td>
-                <td><div align="center">1</div></td>
-                <td ><div align="right"><?php echo @$_SESSION['product'][$i]['product_sale']?>.00&nbsp;</div></td>
-              </tr>
-              <?php } ?>
-              <?php  } ?>
-              <tr>
-                <td colspan="6" align="right"><strong>รวมทั้งหมด (ก่อนหักส่วนลด)</strong></td>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <textarea col="3" rows="3" onchange="this.form.submit()" name="member_note" id="member_note" class="form-control"  placeholder="---- หมายเหตุ ----" /><?php echo @$order_detail[0]['member_note']?></textarea>
+                  </div>
+                </div>
+              </div>
+              <?php echo form_close()?>
 
-                <td ><div align="right">
-                  <?php
-                    echo @number_format(@array_sum(@$total));
-                  ?>.00&nbsp;</div></td>
-                </tr>
-                <tr>
-                  <td colspan="6" align="right"><strong> <input onchange="window.location ='<?php echo site_url(); ?>/sale_manage/is_discount'" type="checkbox" name="is_vat" <?php echo @$_SESSION['is_discount']; ?>>ส่วนลด</strong></td>
-
-                  <td ><div align="right">
-                    <?php echo form_open('/sale_manage/sale_discount'); ?>
-                    <?php if (@$_SESSION['is_discount']!='checked'): ?>
-                      <input class="text-right disabled" readonly onchange="this.form.submit()" style="width: 100%; " type="number" step="any" name="discount_value" value="<?php echo @$_SESSION['discount_value']*1; ?>">
-                      <?php else: ?>
-                        <input  onchange="this.form.submit()" class="text-right" style="width: 100%; background-color: #f5bca2;" type="number" step="any" name="discount_value" value="<?php echo @$_SESSION['discount_value']*1; ?>">
+            </div>
+            <div class="col-md-12">
+              <h4 class="text-center">รูปแบบชำระเงิน</h4>
+              <?php echo form_open('sale_manage/sale_pay_type_edit'); ?>
+              <input type="hidden" name="sale_order_detail_id" value="<?php echo @$order_detail[0]['sale_order_detail_id']?>">
+              <div class="form-inline text-center">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="sale_order_detail_pay_type" value="1" onchange="this.form.submit()"
+                    <?php if (@$order_detail[0]['sale_order_detail_pay_type']==1 || @$order_detail[0]['sale_order_detail_pay_type']==''): ?>
+                      checked
                     <?php endif; ?>
-
-                  <?php echo form_close(); ?>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="6" align="right"><strong>หลังหักส่วนลด</strong></td>
-
-                  <td ><div align="right">
-                    <?php
-                    if (@$_SESSION['is_discount']=='checked') {
-                        if (@$_SESSION['is_vat']=='checked') {
-                          echo @number_format(@array_sum(@$total)-(@$_SESSION['discount_value']*1)-(@array_sum(@$total)*7/100));
-                        } else {
-                          echo @number_format(@array_sum(@$total)-(@$_SESSION['discount_value']*1));
-                        }
-                    } else {
-                      if (@$_SESSION['is_vat']=='checked') {
-                        echo  @number_format(@array_sum(@$total)-(@array_sum(@$total)*7/100));
-                      } else {
-                        echo  @number_format(@array_sum(@$total));
-                      }
-                    }
-
-                    ?>.00&nbsp;</div></td>
+                    />
+                    เงินสด
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="sale_order_detail_pay_type" value="2" onchange="this.form.submit()"
+                    <?php if (@$order_detail[0]['sale_order_detail_pay_type']==2): ?>
+                      checked
+                    <?php endif; ?>
+                    />
+                    เช็ค
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="sale_order_detail_pay_type" value="3" onchange="this.form.submit()"
+                    <?php if (@$order_detail[0]['sale_order_detail_pay_type']==3): ?>
+                      checked
+                    <?php endif; ?>
+                    />
+                    เครดิต
+                  </label>
+                </div>
+              </div>
+              <?php echo form_close(); ?>
+              <hr>
+            </div>
+            <div class="col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th colspan="7"><strong>รายการสินค้า ( Product List )</strong></th>
                   </tr>
-                <tr>
-                  <td colspan="6" align="right">
-                    <strong><input onchange="window.location ='<?php echo site_url(); ?>/sale_manage/sale_vat'" type="checkbox" name="is_vat" <?php echo @$_SESSION['is_vat']; ?>> ภาษีมูลค่าเพิ่ม 7% </strong>
+                  <tr>
+                    <th width="5%" class="text-center">#</th>
+                    <th width="30%" class="text-center">รายการสินค้า</th>
+                    <th width="10%" class="text-center">ต้นทุน</th>
+                    <th width="15%" class="text-center">ราคาขาย</th>
+                    <th width="15%" class="text-center">ราคาสั่งขาย</th>
+                    <th width="10%" class="text-center">จำนวน</th>
+                    <th width="30%"  class="text-center">ราคารวม</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $index =1; foreach ($order_item as $row): ?>
+                    <?php $total_price[] = @$row['stock_price']?>
+                    <?php $total_buy1[] = @$row['product_buy']?>
+                    <tr>
+                      <td class="text-center"><?php echo $index; $index++; ?></td>
+                      <td >
+                        <?php echo @$row['product_code']?> <?php echo @$row['product_name']?>
+                        <a href="<?php echo site_url('sale_manage/stock_item_delete/'.$row['stock_id'])?>"><i class="fa fa-trash-o"></i></a>
+                      </td>
+                      <td class="text-right">
+                        <?php echo @$row['product_buy']?>
+                      </td>
+                      <td class="text-right">
+                        <?php echo @$row['product_sale']?>
+                      </td>
+                      <td class="text-right">
+                        <?php echo form_open('sale_manage/sale_stock_price_edit')?>
+                        <input type="hidden" name="stock_id" value="<?php echo @$row['stock_id']?>">
+                        <input onchange="this.form.submit()" style="background-color: #f5bca2;" class="form-control text-right" type="number" step="any" name="stock_price" value="<?php echo @$row['stock_price']?>">
+                        <?php echo form_close()?>
+                      </td>
+                      <td><div class="text-center">1</div>
+                      </td>
+                      <td class="text-right"><?php echo number_format(@$row['stock_price'], 2, '.', '') ?></div></td>
+                    </tr>
+                  <?php endforeach; ?>
+                  <!--  -->
+                  <tr>
+                    <td colspan="7" style="background: rgb(255, 0, 59);color: #fff;">
+                      <strong>
+                        <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+                        รายการขายใหม่ ต้อง "ยืนยันการแก้ไข" ก่อน
+                      </strong>
+                    </td>
+                  </tr>
+                  <?php  for($i=0;$i<30;$i++){ ?>
+                    <?php $total_sale[] = @$_SESSION['product'][$i]['product_sale']?>
+                    <?php $total_buy[] = @$_SESSION['product'][$i]['product_buy']?>
+                    <?php if(@$_SESSION['product'][$i]['product_key']!=""){ ?>
+                      <tr>
+                        <td class="text-center"><?php echo $index; $index++; ?></td>
+                        <td><?php echo @$_SESSION['product'][$i]['product_code']?> <?php echo @$_SESSION['product'][$i]['product_name']?><input name="product_code[]" id="product_code[]" type="hidden" value="<?php echo @$_SESSION['product'][$i]['product_code']?>" />
+                          <a href="<?php echo site_url('sale_manage/sale_edit_delete/'.@$_SESSION['product'][$i]['product_key'])?>"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                        <td>
+                          <div class="text-right" >
+                            <?php echo @$_SESSION['product'][$i]['product_buy']?>
+                          </div>
+                        </td>
+                        <td class="text-right">
+                          <?php echo form_open('sale_manage/sale_amount/'.$i)?>
+                          <?php echo @$_SESSION['product'][$i]['product_normal_sale']?>
+                          <?php echo form_close()?>
+                        </td>
+                        <td class="text-right">
+                          <?php echo form_open('sale_manage/sale_amount/'.$i)?>
+                          <input onchange="this.form.submit()" style="width: 100%; background-color: #f5bca2;" class="form-control text-right" type="number" step="any" name="sale_amount" value="<?php echo @$_SESSION['product'][$i]['product_sale']?>">
+                          <?php echo form_close()?>
+                        </td>
+                        <td><div class="text-center">1</div></td>
+                        <td class="text-right"><?php echo number_format(@$_SESSION['product'][$i]['product_sale'], 2, '.', '') ?></td>
+                      </tr>
+                      <?php } ?>
+                      <?php  } ?>
+                      <tr>
+                        <td colspan="6" class="text-right"><strong>ยอดรวม</strong></td>
+                        <td class="text-right">
+                          <?php
+                          $all_totol = @number_format(@array_sum(@$total_sale) + @array_sum(@$total_price) , 2, '.', '');
+                          echo $all_totol;
+                          ?>
+                        </td>
+                      </tr>
+                      <?php echo form_open('/sale_manage/sale_discount_edit'); ?>
+                      <tr>
 
-                  </td>
 
-                  <td ><div align="right">
-                    <?php
-                    if (@$_SESSION['is_vat']=='checked') {
-                      echo @number_format(@array_sum(@$total)*7/100).".00&nbsp";
-                    } else {
-                      echo "- ";
-                    }
+                        <td colspan="6" class="text-right">
+                          <!-- <input type="checkbox" name="businessType" value="1"> -->
+                          <strong>
+                            <?php if (@$order_detail[0]['sale_order_detail_discount_status']==1) {
+                              $discount_status = "checked";
+                              // $order_detail[0]['sale_order_detail_discount_status']=0;
+                            }else {
+                              $discount_status = "";
+                              // $order_detail[0]['sale_order_detail_discount_status']=1;
+                            }?>
+                            <?php if (@$order_detail[0]['sale_order_detail_vat_status']==1) {
+                              $vat_status = "checked";
+                              // $order_detail[0]['sale_order_detail_vat_status'] = 0;
+                            }else {
+                              $vat_status = "";
+                              // $order_detail[0]['sale_order_detail_vat_status'] = 1;
+                            }?>
+                            <input onchange="this.form.submit()" type="checkbox" name="sale_order_detail_discount_status" value="<?php echo $order_detail[0]['sale_order_detail_discount_status'] ?>" <?php echo @$discount_status; ?>>ส่วนลด
+                          </strong>
+                        </td>
+                        <td >
+                          <input type="hidden" name="sale_order_detail_id" value="<?php echo @$order_detail[0]['sale_order_detail_id']?>">
 
-                    ?>
-                  </div></td>
-                </tr>
-                <tr>
-                  <td bgcolor="" colspan="6" align="right"><strong>ยอดสุทธิ</strong></td>
+                          <?php if (@$discount_status!='checked'): ?>
+                            <input class="form-control text-right disabled" readonly onchange="this.form.submit()" style="width: 100%; " type="number" step="any" name="sale_order_detail_discount" value="<?php echo @$order_detail[0]['sale_order_detail_discount']*1; ?>">
+                          <?php else: ?>
+                            <input  onchange="this.form.submit()" class="form-control input-xs text-right" style="width: 100%; background-color: #f5bca2;" type="number" step="any" name="sale_order_detail_discount" value="<?php echo @$order_detail[0]['sale_order_detail_discount']*1; ?>">
+                          <?php endif; ?>
+                        </td>
+                      </tr>
 
-                  <td bgcolor="#88d660" ><div align="right"><strong>
-                    <?php
-                  if (@$_SESSION['is_discount']=='checked') {
-                    echo @number_format(@array_sum(@$total)-(@$_SESSION['discount_value']*1));
+                      <tr>
+                        <td colspan="6" class="text-right"><strong>ยอดรวมหลังหักส่วนลด</strong></td>
+                        <td class="text-right">
+                          <?php
+                          if (@$discount_status=='checked') {
+                            if (@$vat_status=='checked') {
+                              echo @number_format($all_totol-( @$order_detail[0]['sale_order_detail_discount']*1)-(@$all_totol*7/100) , 2, '.', '');
+                            } else {
+                              echo @number_format($all_totol-( @$order_detail[0]['sale_order_detail_discount']*1) , 2, '.', '');
+                            }
+                          } else {
+                            if (@$vat_status=='checked') {
+                              echo  @number_format(@$all_totol-(@$all_totol*7/100) , 2, '.', '');
+                            } else {
+                              echo  @number_format(@$all_totol , 2, '.', '');
+                            }
+                          }
+                          ?></div></td>
+                        </tr>
+                        <tr>
+                          <td colspan="6"  class="text-right">
+                            <strong><input onchange="this.form.submit()" type="checkbox" name="sale_order_detail_vat_status" value="<?php echo $order_detail[0]['sale_order_detail_vat_status'] ?>" <?php echo @$vat_status; ?>> ภาษี 7% </strong>
+                          </td>
+                          <td class="text-right">
+                            <?php
+                            if (@$vat_status=='checked') {
+                              echo @number_format(@$all_totol*7/100 , 2, '.', '');
+                            } else {
+                              echo "- ";
+                            }
+                            ?>
+                          </td>
+                        </tr>
+                        <?php echo form_close(); ?>
+
+                        <tr>
+                          <td bgcolor="" colspan="6" class="text-right"><strong>ยอดสุทธิ</strong></td>
+                          <td bgcolor="#88d660"  class="text-right">
+                            <strong>
+                              <?php
+                              if (@$discount_status=='checked') {
+                                echo @number_format(@$all_totol-(@$order_detail[0]['sale_order_detail_discount']*1), 2, '.', '');
+                              } else {
+                                echo  @number_format(@$all_totol, 2, '.', '');
+                              }
+                              ?>
+                            </strong>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6" class="text-right"><strong>ต้นทุนรวม</strong></td>
+                          <td class="text-right"><?php echo @number_format(array_sum(@$total_buy1) + array_sum(@$total_buy), 2, '.', '')?></div></td>
+                        </tr>
+                        <tr>
+                          <td colspan="6" class="text-right"><strong>กำไรสุทธิ</strong></td>
+                          <td class="text-right">
+                            <?php
+                            if (@$discount_status=='checked') {
+                              echo @number_format(@$all_totol-(@$order_detail[0]['sale_order_detail_discount']*1)-(array_sum(@$total_buy1) + array_sum(@$total_buy)), 2, '.', '');
+                            } else {
+                              echo  @number_format(@$all_totol-(array_sum(@$total_buy1) + array_sum(@$total_buy)), 2, '.', '');
+                            }
+                            ?>
+                          </td>
+                        </tr>
+                      </tbody>
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 text-center" >
+                <?php echo form_open('sale_manage/sale_edit_insert')?>
+                <input type="hidden" name="sale_order_detail_id" value="<?php echo @$order_detail[0]['sale_order_detail_id']?>">
+
+                  <h2 style="color:green;">ยอดสุดทธิ </h2>
+                  <h2 class="text-success">
+                  <?php
+                  if (@$discount_status=='checked') {
+                    echo @number_format(@$all_totol-(@$order_detail[0]['sale_order_detail_discount']*1), 2, '.', '');
                   } else {
-                      echo  @number_format(@array_sum(@$total));
-                  }
-                  ?>.00&nbsp;</strong></div></td>
-                </tr>
-                <tr>
-                  <td colspan="6" align="right"><strong>ต้นทุน</strong></td>
-
-                  <td ><div align="right"><?php echo @number_format(@array_sum(@$total_buy))?>.00&nbsp;</div></td>
-                </tr>
-                <tr>
-                  <td colspan="6" align="right"><strong>กำไร</strong></td>
-
-                  <td ><div align="right">
-                    <?php
-                  if (@$_SESSION['is_discount']=='checked') {
-                    echo @number_format(@array_sum(@$total)-(@$_SESSION['discount_value']*1)-@array_sum(@$total_buy));
-                  } else {
-
-                      echo  @number_format(@array_sum(@$total)-@array_sum(@$total_buy));
-
+                    echo  @number_format(@$all_totol, 2, '.', '');
                   }
 
-                  ?>
-                  .00&nbsp;</div></td>
-                </tr>
-              </table>
-            </td>
-            <?php echo form_open('sale_manage/sale_insert')?>
-            <td valign="top"><div align="center">
-              <h2 style="color:green;">รวมเงิน   <?php
-              if (@$_SESSION['is_discount']=='checked') {
-                echo @number_format(@array_sum(@$total)-(@$_SESSION['discount_value']*1));
-              } else {
+                  ?> บาท</h2>
+                  <button type="submit" class="btn btn-lg btn-success btn-block">ยืนยันการแก้ไข</button>
 
-                  echo  @number_format(@array_sum(@$total));
 
-              }
-
-              ?>.00 บาท&nbsp;</h2>
-              <input type="submit" value="ยืนยันการซื้อ" class="btn btn-success" style="width:90%; font-size:30px;">
-              <p></p>
-              <?php echo anchor('sale_manage/sale_clear/','<button type="button" class="btn btn-danger" style="width:90%;font-size:30px;">เริ่มต้นใหม่</button>')?> </div></td>
-            </tr>
-            <?php echo form_close()?>
-          </table>
-        </div>
-      </body>
+                <?php echo form_close()?>
+              </div>
+            </div>
+          </div>
+        </body>
