@@ -47,9 +47,12 @@ class product_model extends CI_Model {
 				unset($product[$i]);
 			}
 			$i++;
-
 		}
-		// $this->debuger->prevalue($product);
+		$this->db->select_sum('sale_order_detail_discount');
+		$this->db->where('sale_order_detail.sale_order_detail_date >=',$input['date_start']);
+		$this->db->where('sale_order_detail.sale_order_detail_date <=',$input['date_end']);
+		$this->db->where('sale_order_detail.sale_order_detail_status',1);
+		$product['sale_order_detail'] = $this->db->get('sale_order_detail')->result_array();
 		return $product;
 	}
 

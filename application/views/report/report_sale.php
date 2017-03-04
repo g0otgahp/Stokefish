@@ -63,7 +63,7 @@
     <?php $confirm = array( 'onclick' => "return confirm('ต้องการลบข้อมูลหรือไม่?')");?>
       <?php $i = 1; $pricesum = 0; $amountsum = 0;?>
 	  <?php foreach($changes as $changes){ ?>
-      <?php $price = $changes['product_sale']*$changes['stock_amount']?>
+      <?php $price = $changes['stock_price']*$changes['stock_amount']?>
       <?php $amount = $changes['stock_amount'] ?>
       <tr>
         <td><div align="center"><?php echo $i ?></div></td>
@@ -71,13 +71,13 @@
         <td><?php echo $changes['stock_date']?></td>
         <td><?php echo $changes['stock_time']?></td>
         <td><div align="right"><?php echo $amount?> หน่วย</div></td>
-        <td><div align="right"><?php echo $changes['product_sale']?> บาท</div></td>
+        <td><div align="right"><?php echo $changes['stock_price']?> บาท</div></td>
         <td><div align="right"><?php echo $price;?> บาท</div></td>
         <td><?php echo $changes['shop_details']?> (<?php echo $changes['shop_zone']?>)</td>
       </tr>
       <?php $i++; $pricesum += $price; $amountsum += $amount;?>
 	  <?php } ?>
-    <tr class="warning">
+    <!-- <tr class="warning">
       <td></td>
       <td></td>
       <td></td>
@@ -86,7 +86,7 @@
       <td></td>
       <td><div align="right"><?php echo number_format($pricesum); ?> บาท</td>
       <td></td>
-    </tr>
+    </tr> -->
     </tbody>
   </table>
   <?php } ?>

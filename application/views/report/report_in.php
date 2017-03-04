@@ -76,11 +76,8 @@
         </tr>
         <?php $i++ ?>
       <?php } ?>
-      <tr>
-      </tr>
       </tbody>
     </table>
-    <?php echo $changes['amount']?>
     <?php } ?>
   </div>
 

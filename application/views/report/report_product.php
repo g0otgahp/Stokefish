@@ -97,8 +97,8 @@
             <td class="text-right"><?php echo number_format(@$total_sale-@$total_buy) ?></td>
             <?php @$total_order_sale = @$row['sum_stock']['stock_price'];  ?>
             <?php //$total_order_sale = number_format(array_sum($total));  ?>
-            <td class="text-right"><?php echo number_format(@$total_sale-@$total_order_sale)?> </td>
-            <td class="text-right"><?php echo number_format(@$total_order_sale-@$total_buy)?> </td>
+            <td class="text-right"><?php echo number_format(@$total_order_sale)?> </td>
+            <td class="text-right"><?php echo number_format((@$total_sale-@$total_buy)-@$total_order_sale)?> </td>
           </tr>
           <?php
           @$product_buy[] = @$row['product_buy'];
@@ -124,6 +124,12 @@
             <th class="text-right"><?php echo  number_format(@array_sum(@$all_total_order_sale) - @array_sum(@$all_total_buy) ) ?></th>
 
           </tr>
+        <tr>
+          <th colspan="9" style="background:#dcdcdc"></th>
+          <th class="text-center"><span class="text-success"><strong>หักส่วนลดบิล</strong></span></th>
+          <th class="text-right"><?php echo  number_format(@$discount_sale) ?></th>
+          <th class="text-right"><?php echo  number_format(@array_sum(@$all_total_order_sale) - @array_sum(@$all_total_buy)-$discount_sale ) ?></th>
+        </tr>
         </tfoot>
       </table>
       <?php } ?>

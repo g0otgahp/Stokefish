@@ -49,6 +49,7 @@ class report extends CI_Controller {
 				'date_end' => $this->input->post('end')
 			);
 			$data['product'] = $this->product_model->report_product_list($data);
+			$data['discount_sale'] = $data['product']['sale_order_detail'][0]['sale_order_detail_discount'];
 			$data['page'] = "report/report_product";
 			$data['date'] = $data;
 			$this->load->view('head',$data);
