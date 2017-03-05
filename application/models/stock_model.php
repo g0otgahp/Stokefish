@@ -9,16 +9,18 @@ class stock_model extends CI_Model {
 	}
 	public function report_sale($input)
 	{
-		$this->db->where('stock.stock_type',"out");
-		$this->db->where('stock.stock_date >=',$input['date_start']);
-		$this->db->where('stock.stock_date <=',$input['date_end']);
+		$this->db->where('sale_order_detail.sale_order_detail_date >=',$input['date_start']);
+		$this->db->where('sale_order_detail.sale_order_detail_date <=',$input['date_end']);
 
 		if($input['shop']!=""){
-			$this->db->where('stock.stock_shop',$input['shop']);
+			$this->db->where('sale_order_detail.sale_order_detail_shop',$input['shop']);
 		}
+
+		$this->db->join('stock','stock.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
+		$this->db->where('stock.stock_type',"out");
 		$this->db->join('product','product.product_code = stock.stock_product');
 		$this->db->join('shop','shop.shop_id = stock.stock_shop');
-		$query = $this->db->get('stock');
+		$query = $this->db->get('sale_order_detail');
 		return $query->result_array();
 	}
 

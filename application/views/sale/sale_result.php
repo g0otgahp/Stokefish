@@ -82,6 +82,7 @@ top: 0%;">
                 <td class="text-right"><?php echo @number_format(@array_sum(@$total))?>.00</td>
               </tr>
               <tr>
+                <?php if ($sale_order_detail[0]['sale_order_detail_discount_status']==1): ?>
                 <td colspan="6" class="text-right"><strong>ส่วนลด</strong></td>
                 <td class="text-right">
                   <?php if ($sale_order_detail[0]['sale_order_detail_discount_status']==1): ?>
@@ -94,22 +95,12 @@ top: 0%;">
               <tr>
                 <td colspan="6" class="text-right"><strong>หลังหักส่วนลด</strong></td>
                 <td class="text-right">
-                  <?php
-                  if ($sale_order_detail[0]['sale_order_detail_discount_status']==1) {
-                    if ($sale_order_detail[0]['sale_order_detail_vat_status']==1) {
-                      echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount'])-(@array_sum(@$total)*7/100));
-                    } else {
-                      echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount']));
-                    }
-                  } else {
-                    if ($sale_order_detail[0]['sale_order_detail_vat_status']==1) {
-                      echo  @number_format(@array_sum(@$total)-(@array_sum(@$total)*7/100));
-                    } else {
-                      echo  @number_format(@array_sum(@$total));
-                    }
-                  }
+                  <?php  echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount']));
                   ?>.00</div></td>
                 </tr>
+              <?php endif; ?>
+
+                <?php if ($sale_order_detail[0]['sale_order_detail_vat_status']==1): ?>
                 <tr>
                   <td colspan="6" class="text-right">
                     <strong> ภาษีมูลค่าเพิ่ม 7% </strong>
@@ -124,12 +115,14 @@ top: 0%;">
                     ?>
                   </td>
                 </tr>
+              <?php endif; ?>
+
                 <tr>
                   <td colspan="6" class="text-right"><strong>ยอดสุทธิ</strong></td>
                   <td bgcolor="#88d660" class="text-right">
                     <strong>
                     <?php
-                    if (@$_SESSION['is_discount']=='checked') {
+                    if ($sale_order_detail[0]['sale_order_detail_discount_status']==1) {
                       echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount']));
                     } else {
                       echo  @number_format(@array_sum(@$total));
@@ -233,6 +226,7 @@ top: 0%;">
                 <td class="text-right"><?php echo @number_format(@array_sum(@$total2))?>.00</td>
               </tr>
               <tr>
+                <?php if ($sale_order_detail[0]['sale_order_detail_discount_status']==1): ?>
                 <td colspan="6" class="text-right"><strong>ส่วนลด</strong></td>
                 <td class="text-right">
                   <?php if ($sale_order_detail[0]['sale_order_detail_discount_status']==1): ?>
@@ -245,22 +239,12 @@ top: 0%;">
               <tr>
                 <td colspan="6" class="text-right"><strong>หลังหักส่วนลด</strong></td>
                 <td class="text-right">
-                  <?php
-                  if ($sale_order_detail[0]['sale_order_detail_discount_status']==1) {
-                    if ($sale_order_detail[0]['sale_order_detail_vat_status']==1) {
-                      echo @number_format(@array_sum(@$total2)-($sale_order_detail[0]['sale_order_detail_discount'])-(@array_sum(@$total)*7/100));
-                    } else {
-                      echo @number_format(@array_sum(@$total2)-($sale_order_detail[0]['sale_order_detail_discount']));
-                    }
-                  } else {
-                    if ($sale_order_detail[0]['sale_order_detail_vat_status']==1) {
-                      echo  @number_format(@array_sum(@$total2)-(@array_sum(@$total2)*7/100));
-                    } else {
-                      echo  @number_format(@array_sum(@$total2));
-                    }
-                  }
+                  <?php  echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount']));
                   ?>.00</div></td>
                 </tr>
+              <?php endif; ?>
+
+                <?php if ($sale_order_detail[0]['sale_order_detail_vat_status']==1): ?>
                 <tr>
                   <td colspan="6" class="text-right">
                     <strong> ภาษีมูลค่าเพิ่ม 7% </strong>
@@ -268,28 +252,30 @@ top: 0%;">
                   <td class="text-right">
                     <?php
                     if ($sale_order_detail[0]['sale_order_detail_vat_status']) {
-                      echo @number_format(@array_sum(@$total2)*7/100).".00";
+                      echo @number_format(@array_sum(@$total)*7/100).".00";
                     } else {
                       echo "- ";
                     }
                     ?>
                   </td>
                 </tr>
+              <?php endif; ?>
+
                 <tr>
                   <td colspan="6" class="text-right"><strong>ยอดสุทธิ</strong></td>
                   <td bgcolor="#88d660" class="text-right">
                     <strong>
                     <?php
-                    if (@$_SESSION['is_discount']=='checked') {
-                      echo @number_format(@array_sum(@$total2)-($sale_order_detail[0]['sale_order_detail_discount']));
+                    if ($sale_order_detail[0]['sale_order_detail_discount_status']==1) {
+                      echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount']));
                     } else {
-                      echo  @number_format(@array_sum(@$total2));
+                      echo  @number_format(@array_sum(@$total));
                     }
                     ?>.00
                   </strong>
                 </td>
                   </tr>
-                  </tbody>
+                </tbody>
                 </table>
               </div>
 
