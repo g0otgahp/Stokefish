@@ -71,8 +71,8 @@
           <td><?php echo $changes['warehouse_date']?></td>
           <td><?php echo $changes['warehouse_time']?></td>
           <td><?php echo number_format($changes['warehouse_amount'])?> หน่วย</td>
-          <td><?php echo number_format($changes['product_sale'])?> บาท</td>
-          <td><?php echo number_format(($changes['product_sale']*$changes['warehouse_amount']))?> บาท</td>
+          <td><?php echo number_format($changes['product_buy'])?> บาท</td>
+          <td><?php echo number_format(($changes['product_buy']*$changes['warehouse_amount']))?> บาท</td>
         </tr>
         <?php $i++ ?>
       <?php } ?>

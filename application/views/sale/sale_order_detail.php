@@ -140,17 +140,13 @@ function getfocus(){
                     <?php if ($sale_order_detail[0]['sale_order_detail_discount_status']==1): ?>
                     <td colspan="6" class="text-right"><strong>ส่วนลด</strong></td>
                     <td class="text-right">
-                      <?php if ($sale_order_detail[0]['sale_order_detail_discount_status']==1): ?>
                       <?php echo $sale_order_detail[0]['sale_order_detail_discount']; ?>.00
-                      <?php else: ?>
-                        -
-                      <?php endif; ?>
                     </td>
                   </tr>
                   <tr>
                     <td colspan="6" class="text-right"><strong>หลังหักส่วนลด</strong></td>
                     <td class="text-right">
-                      <?php  echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount']));
+                      <?php  echo @number_format(@array_sum(@$total)-($sale_order_detail[0]['sale_order_detail_discount']*1));
                       ?>.00</div></td>
                     </tr>
                   <?php endif; ?>
@@ -162,11 +158,12 @@ function getfocus(){
                       </td>
                       <td class="text-right">
                         <?php
-                        if ($sale_order_detail[0]['sale_order_detail_vat_status']) {
-                          echo @number_format(@array_sum(@$total)*7/100).".00";
-                        } else {
-                          echo "- ";
-                        }
+                          if ($sale_order_detail[0]['sale_order_detail_discount_status']==1) {
+                            @$discount_after_vat = (@array_sum(@$total)-(@$sale_order_detail[0]['sale_order_detail_discount']*1))*7/100;
+                            echo @number_format($discount_after_vat).".00";
+                          } else {
+                            echo @number_format(@array_sum(@$total)*7/100).".00";
+                          }
                         ?>
                       </td>
                     </tr>
@@ -202,7 +199,7 @@ function getfocus(){
                             echo  @number_format(@array_sum(@$total)-@array_sum(@$buy));
                           }
                           ?>
-                          .00
+                        .00
                         </td>
                         </tr>
                       </tbody>

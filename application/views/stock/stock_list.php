@@ -35,26 +35,20 @@
         <td><div align="center">
 
           <?php
-          $this->db->order_by('sale_order_detail_date','desc');
           $this->db->where('stock_shop',@$_SESSION['employees_shop']);
-          $this->db->where('sale_order_detail_status',1);
-          $this->db->join('stock','stock.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
           $this->db->where('stock_type','in');
-          $this->db->join('member','member.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
-          $this->db->join('product','product.product_code = stock.stock_product');
-          $in = $this->db->get('sale_order_detail');
+          $this->db->where('stock_product',$product['product_code']);
+          $in = $this->db->get('stock');
           $in_stock_amount = $in->result_array();
 
           $amount_in=0; foreach ($in_stock_amount as $in_amount) {
             $amount_in += $in_amount['stock_amount'];
           }
 
-          $this->db->order_by('sale_order_detail_date','desc');
           $this->db->where('stock_shop',@$_SESSION['employees_shop']);
           $this->db->where('sale_order_detail_status',1);
           $this->db->join('stock','stock.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
           $this->db->where('stock_type','out');
-          $this->db->join('member','member.sale_order_detail_id = sale_order_detail.sale_order_detail_id');
           $this->db->join('product','product.product_code = stock.stock_product');
           $out = $this->db->get('sale_order_detail');
           $out_stock_amount = $out->result_array();

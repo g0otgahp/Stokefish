@@ -68,7 +68,7 @@
         <?php $i = 1;
         // echo "<pre>";
         // print_r($product);
-
+        // $this->debuger->prevalue($product);
         ?>
         <?php foreach($product as $row){ ?>
           <tr>
@@ -96,9 +96,10 @@
             <td class="text-right"><?php @$total_sale = @$row['sum_stock']['stock_amount']*@$row['product_sale']; echo number_format(@$total_sale)  ?></td>
             <td class="text-right"><?php echo number_format(@$total_sale-@$total_buy) ?></td>
             <?php @$total_order_sale = @$row['sum_stock']['stock_price'];  ?>
-            <?php //$total_order_sale = number_format(array_sum($total));  ?>
-            <td class="text-right"><?php echo number_format(@$total_order_sale)?> </td>
-            <td class="text-right"><?php echo number_format((@$total_sale-@$total_buy)-@$total_order_sale)?> </td>
+            <?php @$discount_sale_product = @$total_sale-$total_order_sale;  ?>
+
+            <td class="text-right"><?php echo number_format(@$discount_sale_product)?> </td>
+            <td class="text-right"><?php echo number_format((@$total_sale-@$total_buy)-$discount_sale_product)?> </td>
           </tr>
           <?php
           @$product_buy[] = @$row['product_buy'];

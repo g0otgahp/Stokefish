@@ -76,6 +76,7 @@ class warehouse extends CI_Controller {
 					'stock_shop' => $row['warehouse_temp_shop'],
 					'stock_price' => $date['warehouse_temp_price'],
 				);
+				$this->stock_model->product_insert_limit($row['warehouse_temp_shop'],$row['warehouse_temp_product']);
 				$this->stock_model->stock_in($input);
 			}
 			$type = "out";

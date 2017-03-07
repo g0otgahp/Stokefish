@@ -18,6 +18,10 @@ function getfocus(){
       <tr>
         <td width="61%">
           <div align="center">
+            <?php if (@$_SESSION['check']==1): ?>
+              <font color="red">สินค้าไม่มีในสต๊อก</font>
+            <?php endif; ?>
+
             <?php echo form_open('sale_manage/sale_list')?>
             <input type="text" name="barcode" id="barcode" class="form-control" required autocomplete="off" style="width:90%; text-align:center;" placeholder="---- บาร์โค้ดสินค้า ----" />
             <?php echo form_close()?>
@@ -159,7 +163,7 @@ function getfocus(){
                 <td>
                   <div align="right">
                     <?php echo form_open('sale_manage/sale_amount/'.$i)?>
-                    <input onchange="this.form.submit()" style="width: 100%; background-color: #f5bca2;" class="text-right" type="number" step="any" name="sale_amount" value="<?php echo @$_SESSION['product'][$i]['product_sale']?>">
+                    <input onchange="this.form.submit()" Max="<?php echo @$_SESSION['product'][$i]['product_normal_sale']?>" style="width: 100%; background-color: #f5bca2;" class="text-right" type="number" step="any" name="sale_amount" value="<?php echo @$_SESSION['product'][$i]['product_sale']?>">
                     <?php echo form_close()?>
                   </div>
                 </td>
@@ -184,7 +188,7 @@ function getfocus(){
                     <?php if (@$_SESSION['is_discount']!='checked'): ?>
                       <input class="text-right disabled" readonly onchange="this.form.submit()" style="width: 100%; " type="number" step="any" name="discount_value" value="<?php echo @$_SESSION['discount_value']*1; ?>">
                       <?php else: ?>
-                        <input  onchange="this.form.submit()" class="text-right" style="width: 100%; background-color: #f5bca2;" type="number" step="any" name="discount_value" value="<?php echo @$_SESSION['discount_value']*1; ?>">
+                        <input required onchange="this.form.submit()" class="text-right" style="width: 100%; background-color: #f5bca2;" type="number" step="any" name="discount_value" value="<?php echo @$_SESSION['discount_value']*1; ?>">
                     <?php endif; ?>
 
                   <?php echo form_close(); ?>
@@ -196,19 +200,10 @@ function getfocus(){
                   <td ><div align="right">
                     <?php
                     if (@$_SESSION['is_discount']=='checked') {
-                        if (@$_SESSION['is_vat']=='checked') {
-                          echo @number_format(@array_sum(@$total)-(@$_SESSION['discount_value']*1)-(@array_sum(@$total)*7/100));
-                        } else {
-                          echo @number_format(@array_sum(@$total)-(@$_SESSION['discount_value']*1));
-                        }
+                        echo @number_format(@array_sum(@$total)-(@$_SESSION['discount_value']*1));
                     } else {
-                      if (@$_SESSION['is_vat']=='checked') {
-                        echo  @number_format(@array_sum(@$total)-(@array_sum(@$total)*7/100));
-                      } else {
                         echo  @number_format(@array_sum(@$total));
-                      }
                     }
-
                     ?>.00&nbsp;</div></td>
                   </tr>
                 <tr>
@@ -220,7 +215,12 @@ function getfocus(){
                   <td ><div align="right">
                     <?php
                     if (@$_SESSION['is_vat']=='checked') {
+                      if (@$_SESSION['is_discount']=='checked') {
+                        @$discount_after_vat = (@array_sum(@$total)-(@$_SESSION['discount_value']*1))*7/100;
+                      echo @number_format(@$discount_after_vat , 2, '.', '');
+                      } else {
                       echo @number_format(@array_sum(@$total)*7/100).".00&nbsp";
+                      }
                     } else {
                       echo "- ";
                     }

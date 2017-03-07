@@ -134,7 +134,7 @@ function getfocus(){
                       <td class="text-right">
                         <?php echo form_open('sale_manage/sale_stock_price_edit')?>
                         <input type="hidden" name="stock_id" value="<?php echo @$row['stock_id']?>">
-                        <input onchange="this.form.submit()" style="background-color: #f5bca2;" class="form-control text-right" type="number" step="any" name="stock_price" value="<?php echo @$row['stock_price']?>">
+                        <input onchange="this.form.submit()" style="background-color: #f5bca2;" class="form-control text-right" type="number" step="any" name="stock_price" Max="<?php echo @$row['product_sale']?>" value="<?php echo @$row['stock_price']?>">
                         <?php echo form_close()?>
                       </td>
                       <td><div class="text-center">1</div>
@@ -172,7 +172,7 @@ function getfocus(){
                         </td>
                         <td class="text-right">
                           <?php echo form_open('sale_manage/sale_amount/'.$i)?>
-                          <input onchange="this.form.submit()" style="width: 100%; background-color: #f5bca2;" class="form-control text-right" type="number" step="any" name="sale_amount" value="<?php echo @$_SESSION['product'][$i]['product_sale']?>">
+                          <input onchange="this.form.submit()" Max="<?php echo @$_SESSION['product'][$i]['product_normal_sale']?>" style="width: 100%; background-color: #f5bca2;" class="form-control text-right" type="number" step="any" name="sale_amount" value="<?php echo @$_SESSION['product'][$i]['product_sale']?>">
                           <?php echo form_close()?>
                         </td>
                         <td><div class="text-center">1</div></td>
@@ -229,17 +229,9 @@ function getfocus(){
                         <td class="text-right">
                           <?php
                           if (@$discount_status=='checked') {
-                            if (@$vat_status=='checked') {
-                              echo @number_format($all_totol-( @$order_detail[0]['sale_order_detail_discount']*1)-(@$all_totol*7/100) , 2, '.', '');
-                            } else {
                               echo @number_format($all_totol-( @$order_detail[0]['sale_order_detail_discount']*1) , 2, '.', '');
-                            }
                           } else {
-                            if (@$vat_status=='checked') {
-                              echo  @number_format(@$all_totol-(@$all_totol*7/100) , 2, '.', '');
-                            } else {
                               echo  @number_format(@$all_totol , 2, '.', '');
-                            }
                           }
                           ?></div></td>
                         </tr>
@@ -250,7 +242,12 @@ function getfocus(){
                           <td class="text-right">
                             <?php
                             if (@$vat_status=='checked') {
-                              echo @number_format(@$all_totol*7/100 , 2, '.', '');
+                              if (@$discount_status=='checked') {
+                                @$discount_after_vat = ($all_totol-(@$order_detail[0]['sale_order_detail_discount']*1))*7/100;
+                                echo @number_format(@$discount_after_vat , 2, '.', '');
+                              } else {
+                                echo @number_format(@$all_totol*7/100 , 2, '.', '');
+                              }
                             } else {
                               echo "- ";
                             }

@@ -57,6 +57,14 @@ class stock_model extends CI_Model {
 		}
 	}
 
+	public function check_product($shop_id,$product_code)
+	{
+		$this->db->where('product_limit_shop_id',$shop_id);
+		$this->db->where('product_limit_product_code',$product_code);
+		$query = $this->db->get('product_limit')->result_array();
+		return $query;
+	}
+
 	public function stock_in_temp_list_shop($shop_id)
 	{
 		$this->db->order_by('warehouse_temp_date','desc');
