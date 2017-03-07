@@ -24,7 +24,7 @@
     </div>
   </div>
   <!-- /.row -->
-  
+
   <div class="row">
     <div class="col-lg-3">
       <div class="panel panel-info">
@@ -73,14 +73,13 @@
             <div class="col-xs-6"> <i class="fa fa-money fa-3x"></i> </div>
             <div class="col-xs-6 text-right">
               <p class="announcement-heading">
-                <?php
-                    	$this->db->select_sum('product.product_sale');
+          <?php
+            $this->db->select_sum('stock.stock_price');
 						$this->db->where('stock.stock_date',date('Y-m-d'));
 						$this->db->where('stock.stock_type',"out");
-						$this->db->join('product','product.product_code = stock.stock_product');
 						$query1 = $this->db->get('stock');
 						$daily1 = $query1->result_array();
-						echo number_format($daily1[0]['product_sale']);
+						echo number_format(@$daily1[0]['stock_price']);
 					?>
               </p>
               <p class="announcement-text">ยอดรายวัน</p>
@@ -103,15 +102,14 @@
             <div class="col-xs-6"> <i class="fa fa-money fa-3x"></i> </div>
             <div class="col-xs-6 text-right">
               <p class="announcement-heading">
-                <?php
-                    	$this->db->select_sum('product.product_sale');
+          <?php
+            $this->db->select_sum('stock.stock_price');
 						$this->db->where('stock.stock_date >=',date('Y-m').'-01');
 						$this->db->where('stock.stock_date <=',date('Y-m').'-31');
 						$this->db->where('stock.stock_type',"out");
-						$this->db->join('product','product.product_code = stock.stock_product');
 						$query2 = $this->db->get('stock');
 						$daily2 = $query2->result_array();
-						echo number_format($daily2[0]['product_sale']);
+						echo number_format($daily2[0]['stock_price']);
 					?>
               </p>
               <p class="announcement-text">ยอดรายเดือน</p>
@@ -129,7 +127,7 @@
     </div>
   </div>
   <!-- /.row -->
-  
+
   <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-primary">
