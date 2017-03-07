@@ -48,6 +48,7 @@ function getfocus(){
 				<th width="15%"><div align="center">ประเภทสินค้า <i class="fa fa-sort"></i></div></th>
 				<th width="30%"><div align="center">ชื่อสินค้า <i class="fa fa-sort"></i></div></th>
 				<th width="15%"><div align="center">จำนวนนำเข้า <i class="fa fa-sort"></i></div></th>
+				<th width="15%"><div align="center">หน่วย <i class="fa fa-sort"></i></div></th>
 				<th width="5%"><div align="center">ยกเลิก <i class="fa fa-sort"></i></div></th>
 			</tr>
 		</thead>
@@ -60,10 +61,9 @@ function getfocus(){
 				<td><?php echo $product['product_code']?></td>
 				<td><?php echo $product['category_name']?></td>
 				<td><?php echo $product['product_name']?></td>
-				<td><div align="center">
-				<?php echo number_format(@$product['warehouse_temp_amount']);?>
-			<td><div class="align="center""><?php echo anchor('warehouse/warehouse_temp_in_remove/'.$product['warehouse_temp_id'],'<input type="button" class="btn btn-danger" value="ยกเลิก">')?></div></td>
-				</div></td>
+				<td><div align="center"><?php echo number_format(@$product['warehouse_temp_amount']);?></td></div>
+				<td><div align="center"><?php echo $product['product_unit']?></td></div>
+				<td><div class="align="center""><?php echo anchor('warehouse/warehouse_temp_in_remove/'.$product['warehouse_temp_id'],'<input type="button" class="btn btn-danger" value="ยกเลิก">')?></div></td>
 			</tr>
 			<?php $i++ ?>
 		<?php } ?>

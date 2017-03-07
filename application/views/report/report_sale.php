@@ -54,6 +54,7 @@
         <th><div align="center">วันที่ <i class="fa fa-sort"></i></div></th>
         <th><div align="center">เวลา <i class="fa fa-sort"></i></div></th>
         <th><div align="center">จำนวน <i class="fa fa-sort"></i></div></th>
+        <th><div align="center">หน่วย <i class="fa fa-sort"></i></div></th>
         <th><div align="center">ราคาต่อหน่วย <i class="fa fa-sort"></i></div></th>
         <th><div align="center">ราคารวม <i class="fa fa-sort"></i></div></th>
         <th><div align="center">ร้านขาย <i class="fa fa-sort"></i></div></th>
@@ -70,7 +71,8 @@
         <td><?php echo $changes['product_name']?></td>
         <td><?php echo $changes['stock_date']?></td>
         <td><?php echo $changes['stock_time']?></td>
-        <td><div align="right"><?php echo $amount?> หน่วย</div></td>
+        <td><div align="right"><?php echo $amount?></div></td>
+        <td><div align="right"><?php echo $changes['product_unit']?></div></td>
         <td><div align="right"><?php echo $changes['stock_price']?> บาท</div></td>
         <td><div align="right"><?php echo $price;?> บาท</div></td>
         <td><?php echo $changes['shop_details']?> (<?php echo $changes['shop_zone']?>)</td>

@@ -70,7 +70,7 @@
           <td><?php echo $changes['product_name']?></td>
           <td><?php echo $changes['warehouse_date']?></td>
           <td><?php echo $changes['warehouse_time']?></td>
-          <td><?php echo number_format($changes['warehouse_amount'])?> หน่วย</td>
+          <td><?php echo number_format($changes['warehouse_amount'])." ".$changes['product_unit']?></td>
           <td><?php echo number_format($changes['product_buy'])?> บาท</td>
           <td><?php echo number_format(($changes['product_buy']*$changes['warehouse_amount']))?> บาท</td>
         </tr>
