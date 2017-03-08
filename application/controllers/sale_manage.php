@@ -5,6 +5,7 @@ class sale_manage extends CI_Controller {
 	public function sale_list()
 	{
 		@session_start();
+		date_default_timezone_set("Asia/Bangkok");
 		$barcode = array('barcode' => $this->input->post('barcode'));
 		$product_limit_check = $this->stock_model->check_product(@$_SESSION['employees_shop'],$barcode['barcode']);
 
@@ -127,6 +128,7 @@ class sale_manage extends CI_Controller {
 	public function sale_insert()
 	{
 		@session_start();
+		date_default_timezone_set("Asia/Bangkok");
 		if ($_SESSION['is_vat'] = 'checked') {
 			$vat = '1';
 		}
@@ -201,6 +203,7 @@ class sale_manage extends CI_Controller {
 	public function sale_edit_insert()
 	{
 		@session_start();
+		date_default_timezone_set("Asia/Bangkok");
 		$input = $this->input->post();
 		// $this->debuger->prevalue($input);
 		foreach ($_SESSION['product'] as $row) {

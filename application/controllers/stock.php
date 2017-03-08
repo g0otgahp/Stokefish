@@ -70,6 +70,7 @@ class stock extends CI_Controller {
 	public function stock_in_insert()
 	{
 		@session_start();
+		date_default_timezone_set("Asia/Bangkok");
 		if(@$_SESSION['employees_id']!=""){
 			@$shop_id = $_SESSION['employees_shop'];
 			$data = $this->stock_model->stock_in_temp_list_shop($_SESSION['employees_shop']);

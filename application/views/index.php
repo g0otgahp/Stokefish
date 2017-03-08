@@ -73,7 +73,9 @@
             <div class="col-xs-6"> <i class="fa fa-money fa-3x"></i> </div>
             <div class="col-xs-6 text-right">
               <p class="announcement-heading">
+
           <?php
+            date_default_timezone_set("Asia/Bangkok");
             $this->db->select_sum('stock.stock_price');
 						$this->db->where('stock.stock_date',date('Y-m-d'));
 						$this->db->where('stock.stock_type',"out");

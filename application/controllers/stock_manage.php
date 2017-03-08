@@ -28,6 +28,7 @@ class stock_manage extends CI_Controller {
 	public function stock_temp_in()
 	{
 			@session_start();
+			date_default_timezone_set("Asia/Bangkok");
 			$stock = array(
 				'warehouse_temp_product' => $this->input->post('stock_product'),
 				'warehouse_temp_type' => "in",

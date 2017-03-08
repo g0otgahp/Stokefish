@@ -28,6 +28,7 @@ class warehouse extends CI_Controller {
 	public function warehouse_in_insert()
 	{
 		@session_start();
+		date_default_timezone_set("Asia/Bangkok");
 		if(@$_SESSION['employees_id']!=""){
 			$data = $this->warehouse_model->warehouse_in_temp_list();
 			foreach ($data as $row) {
@@ -52,6 +53,8 @@ class warehouse extends CI_Controller {
 	public function warehouse_out_insert()
 	{
 		@session_start();
+		date_default_timezone_set("Asia/Bangkok");
+
 		if(@$_SESSION['employees_id']!=""){
 			$data = $this->warehouse_model->warehouse_out_temp_list();
 			foreach ($data as $row) {

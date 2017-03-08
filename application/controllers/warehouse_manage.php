@@ -45,6 +45,7 @@ class warehouse_manage extends CI_Controller {
 	public function warehouse_in_temp()
 	{
 		@session_start();
+		date_default_timezone_set("Asia/Bangkok");
 		$warehouse = array(
 			'warehouse_temp_product' => $this->input->post('warehouse_product'),
 			'warehouse_temp_type' => "in",
@@ -58,6 +59,7 @@ class warehouse_manage extends CI_Controller {
 	public function warehouse_out_temp()
 	{
 		@session_start();
+		date_default_timezone_set("Asia/Bangkok");
 		$warehouse = array(
 			'warehouse_temp_product' => $this->input->post('warehouse_product'),
 			'warehouse_temp_type' => "out",
