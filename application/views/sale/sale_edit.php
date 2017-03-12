@@ -14,10 +14,6 @@ function getfocus(){
       </div>
     </div>
     <div class="row">
-      <?php //echo "<pre>" ?>
-        <?php// print_r($order_detail); ?>
-        <?php //print_r($order_item); ?>
-        <?php // print_r($_SESSION['product']); ?>
       </div>
       <div class="row">
         <div class="col-md-9">

@@ -30,7 +30,7 @@ function getfocus(){
             <div class="collapse navbar-collapse">
               <div class="navbar-form navbar-right">
                 <a href="<?php echo site_url('sale/sale_edit/'.$sale_order_detail[0]['sale_order_detail_id']);?>" class="btn btn-warning">แก้ไข</a>
-                <a href="<?php echo site_url('sale/sale_result/'.$sale_order_detail[0]['sale_order_detail_id']);?>" class="btn btn-primary">พิมพ์</a>
+                <a href="<?php echo site_url('sale/sale_result/'.$sale_order_detail[0]['sale_order_detail_id']);?>" target="_blank" class="btn btn-primary">พิมพ์</a>
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@ function getfocus(){
                 <th width="30%">รายการสินค้า</th>
                 <th width="10%" class="text-right">ราคาทุน</th>
                 <th width="15%" class="text-right">ราคาต่อหน่วย</th>
-                <th width="18%" class="text-right">ราคาสั่งขายต่อหน่วย</th>
+                <th width="15%" class="text-right">ราคาสั่งขายต่อหน่วย</th>
                 <th width="9%" class="text-right">จำนวน</th>
                 <th width="20%" class="text-right">ราคารวม</th>
               </tr>
@@ -198,8 +198,7 @@ function getfocus(){
                           } else {
                             echo  @number_format(@array_sum(@$total)-@array_sum(@$buy));
                           }
-                          ?>
-                        .00
+                          ?>.00
                         </td>
                         </tr>
                       </tbody>

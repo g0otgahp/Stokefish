@@ -15,7 +15,7 @@
         <th width="5%"><div align="center">ลำดับ</div></th>
         <th width="10%"><div align="center">รหัสสินค้า <i class="fa fa-sort"></i></div></th>
         <th width="15%"><div align="center">ประเภทสินค้า <i class="fa fa-sort"></i></div></th>
-        <th width="25%"><div align="center">ชื่อสินค้า <i class="fa fa-sort"></i></div></th>
+        <th width="21%"><div align="center">ชื่อสินค้า <i class="fa fa-sort"></i></div></th>
         <th width="7%"><div align="center"> หน่วย <i class="fa fa-sort"></i></div></th>
         <th width="12%"><div align="center">สถานะ <i class="fa fa-sort"></i></div></th>
         <th width="26%"><div align="center">จัดการข้อมูล</div></th>
