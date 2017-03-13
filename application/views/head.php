@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>ระบบบริหารจัดการคลังสินค้า Bhuvarat Fishing Net.</title>
+<title>ระบบบริหารจัดการคลังสินค้า <?php echo $config[0]['config_shop_name'] ?></title>
 
 <!-- Bootstrap core CSS -->
 <link href="<?php echo base_url()?>css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -85,7 +85,7 @@
             <!--<li><?php echo anchor('report/expenditure','<i class="fa fa-caret-right"></i> รายจ่าย')?></li>-->
           </ul>
         </li>
-		<!--<li><a href="#"><i class="fa fa-cog"></i> ตั้งค่าระบบ</a></li>-->
+    <li><?php echo anchor('config','<i class="fa fa-cog"></i> ตั้งค่า')?></li>
         <?php } ?>
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>

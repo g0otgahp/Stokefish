@@ -12,10 +12,12 @@ top: 0%;">
 </div>
 <page size="A4" style="color: #000;">
   <div class="row">
-    <div class="col-lg-12" align="center">
-      <h1>พญาปลามังกร Bhuvarat Fishing Net.</h1>
+    <div class="col-lg-offset-2 col-lg-8" align="center">
       <h1>ใบเสร็จ</h1>
-
+      <h1><?php echo $config[0]['config_shop_name'] ?></h1>
+      <h5><?php echo $config[0]['config_address'] ?> โทร. <?php echo $config[0]['config_phone'] ?></h5>
+      <h5>เลขประจำผู้เสียภาษีอากร <?php echo $config[0]['config_tax'] ?></h5>
+      <h5><?php echo $config[0]['config_detail'] ?></h5>
     </div>
   </div>
   <div class="col-xs-6">
@@ -153,10 +155,12 @@ top: 0%;">
 
 <page size="A4" style="color: #000;">
   <div class="row">
-    <div class="col-lg-12" align="center">
-      <h1>พญาปลามังกร Bhuvarat Fishing Net.</h1>
+    <div class="col-lg-offset-2 col-lg-8" align="center">
       <h1>สำเนา ใบเสร็จ</h1>
-
+      <h1><?php echo $config[0]['config_shop_name'] ?></h1>
+      <h5><?php echo $config[0]['config_address'] ?> โทร. <?php echo $config[0]['config_phone'] ?></h5>
+      <h5>เลขประจำผู้เสียภาษีอากร <?php echo $config[0]['config_tax'] ?></h5>
+      <h5><?php echo $config[0]['config_detail'] ?></h5>
     </div>
   </div>
   <div class="col-xs-6">

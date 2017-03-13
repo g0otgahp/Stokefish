@@ -5,13 +5,14 @@ class home extends CI_Controller {
 	public function index()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['page'] = "index";
 			$this->load->view('head',$data);
 		}else{
 			redirect('login/index');
 		}
-		
+
 	}
 	public function chart()
 	{

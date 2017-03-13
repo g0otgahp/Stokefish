@@ -7,7 +7,7 @@ function getfocus(){
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
-      <h1>แก้ไขข้อมูลร้านขายน้ำ <small>ระบบบริหารจัดการคลังสินค้า Bhuvarat Fishing Net.</small></h1>
+      <h1>แก้ไขข้อมูลสาขา <small>ระบบบริหารจัดการคลังสินค้า <?php echo $config[0]['config_shop_name'] ?></small></h1>
       <ol class="breadcrumb">
         <li class="active"><i class="fa fa-shopping-cart"></i> Edit Add</li>
       </ol>

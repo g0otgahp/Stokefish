@@ -5,6 +5,7 @@ class product extends CI_Controller {
 	public function category_list()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['category'] = $this->category_model->category_list();
 			$data['page'] = "product/category_list";
@@ -16,6 +17,7 @@ class product extends CI_Controller {
 	public function category_insert()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['page'] = "product/category_insert";
 			$this->load->view('head',$data);
@@ -26,6 +28,7 @@ class product extends CI_Controller {
 	public function category_update()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$category_id = $this->uri->segment(3);
 			$data['category'] = $this->category_model->category_details($category_id);
@@ -38,6 +41,7 @@ class product extends CI_Controller {
 	public function category_delete()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$category_id = $this->uri->segment(3);
 			$this->category_model->category_delete($category_id);
@@ -49,6 +53,7 @@ class product extends CI_Controller {
 	public function product_list()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['product'] = $this->product_model->product_list();
 			$data['page'] = "product/product_list";
@@ -60,6 +65,7 @@ class product extends CI_Controller {
 	public function product_insert()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['category'] = $this->category_model->category_list();
 			$data['page'] = "product/product_insert";
@@ -71,6 +77,7 @@ class product extends CI_Controller {
 	public function product_update()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$product_id = $this->uri->segment(3);
 			$data['category'] = $this->category_model->category_list();
@@ -84,6 +91,7 @@ class product extends CI_Controller {
 	public function product_delete()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$product_id = $this->uri->segment(3);
 			$this->product_model->product_delete($product_id);
@@ -94,6 +102,7 @@ class product extends CI_Controller {
 	}
 	public function product_barcode()
 	{
+		$data['config'] = $this->config_model->config();
 		$product_id = $this->uri->segment(3);
 		$data['product'] = $this->product_model->product_details($product_id);
 		$this->load->view('product/product_barcode',$data);

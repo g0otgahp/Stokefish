@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>ระบบบริหารจัดการคลังสินค้า Bhuvarat Fishing Net.</title>
+<title>ระบบบริหารจัดการคลังสินค้า <?php echo $config[0]['config_shop_name'] ?></title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.min.css">
 <style type="text/css">
@@ -18,8 +18,9 @@ body {
 </head>
 
 <body>
+<br>
 <div align="center"><img src="<?php echo base_url()?>images/logo.png" width="330"></div>
-<div align="center"><h1>Bhuvarat Fishing Net.</h1></div>
+<div align="center"><h1><?php echo $config[0]['config_shop_name'] ?></h1></div>
 <p>&nbsp;</p>
 <?php if($this->uri->segment(3)=="error"){ ?>
 <div align="center"><strong style="color:red;">ไม่สามารถเข้าสู่ระบบได้ ตรวจสอบ Username และ Password อีกครั้ง!</strong></div>

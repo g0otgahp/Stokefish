@@ -4,7 +4,8 @@ class login extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('login');
+		$data['config'] = $this->config_model->config();
+		$this->load->view('login',$data);
 	}
 	public function login_check()
 	{

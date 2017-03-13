@@ -5,6 +5,7 @@ class warehouse extends CI_Controller {
 	public function warehouse_list()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['product'] = $this->product_model->product_list();
 			$data['page'] = "warehouse/warehouse_list";
@@ -16,6 +17,7 @@ class warehouse extends CI_Controller {
 	public function warehouse_in()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['product'] = $this->warehouse_model->warehouse_in_temp_list();
 			$data['allproduct'] = $this->product_model->product_list();
@@ -28,6 +30,7 @@ class warehouse extends CI_Controller {
 	public function warehouse_in_insert()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		date_default_timezone_set("Asia/Bangkok");
 		if(@$_SESSION['employees_id']!=""){
 			$data = $this->warehouse_model->warehouse_in_temp_list();
@@ -53,6 +56,7 @@ class warehouse extends CI_Controller {
 	public function warehouse_out_insert()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		date_default_timezone_set("Asia/Bangkok");
 
 		if(@$_SESSION['employees_id']!=""){
@@ -93,6 +97,7 @@ class warehouse extends CI_Controller {
 	public function warehouse_temp_in_remove()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 			$id = $this->uri->segment(3);
 			$data['product'] = $this->warehouse_model->warehouse_temp_delete($id);
 			redirect('warehouse/warehouse_in');
@@ -100,6 +105,7 @@ class warehouse extends CI_Controller {
 	public function warehouse_temp_out_remove()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 			$id = $this->uri->segment(3);
 			$data['product'] = $this->warehouse_model->warehouse_temp_delete($id);
 			redirect('warehouse/warehouse_out');
@@ -107,6 +113,7 @@ class warehouse extends CI_Controller {
 	public function warehouse_out()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['shop'] = $this->shop_model->shop_list();
 			$data['allproduct'] = $this->product_model->product_list();

@@ -1,7 +1,7 @@
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
-      <h1>ข้อมูลสินค้า <small>ระบบบริหารจัดการคลังสินค้า Bhuvarat Fishing Net.</small></h1>
+      <h1>ข้อมูลสินค้า <small>ระบบบริหารจัดการคลังสินค้า <?php echo $config[0]['config_shop_name'] ?></small></h1>
       <ol class="breadcrumb">
         <li class="active"><i class="fa fa-tags"></i> Product List</li>
       </ol>

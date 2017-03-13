@@ -6,6 +6,7 @@ class sale extends CI_Controller {
 	public function sale_list()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['page'] = "sale/sale_list";
 			$this->load->view('head',$data);
@@ -17,6 +18,7 @@ class sale extends CI_Controller {
 	{
 		$order_id = $this->uri->segment(3);
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['page'] = "sale/sale_edit";
 			$data['order_detail'] = $this->stock_model->order_detail($order_id);
@@ -29,6 +31,7 @@ class sale extends CI_Controller {
 	public function sale_list_delete()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$product_key = $this->uri->segment(3);
 			for($i=0;$i<30;$i++){
@@ -48,6 +51,7 @@ class sale extends CI_Controller {
 	public function sale_result()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$order_id = $this->uri->segment(3);
 			$data['sale_order_detail'] = $this->stock_model->sale_order_detail($order_id);

@@ -5,6 +5,7 @@ class stock extends CI_Controller {
 	public function stock_list()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			@$shop_id = $_SESSION['employees_shop'];
 			$data['product'] = $this->product_model->product_list_by_shop($shop_id);
@@ -17,6 +18,7 @@ class stock extends CI_Controller {
 	public function stock_list_shop()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['employees_shop'] = @$this->input->post('employees_shop');
 			$data['shop'] = $this->shop_model->shop_list();
@@ -32,6 +34,7 @@ class stock extends CI_Controller {
 	public function stock_shop_option()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['employees_shop'] = @$this->input->post('employees_shop');
 			$data['shop'] = $this->shop_model->shop_list();
@@ -46,6 +49,7 @@ class stock extends CI_Controller {
 	public function stock_update()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 			$product_id = $this->uri->segment(3);
 			$input = $this->input->post();
 			$up = $this->db->where('product_limit_id',$product_id)
@@ -57,6 +61,7 @@ class stock extends CI_Controller {
 	public function stock_in()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$data['allproduct'] = $this->product_model->product_list();
 			$data['shop'] = $this->shop_model->shop_list();
@@ -70,6 +75,7 @@ class stock extends CI_Controller {
 	public function stock_in_insert()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		date_default_timezone_set("Asia/Bangkok");
 		if(@$_SESSION['employees_id']!=""){
 			@$shop_id = $_SESSION['employees_shop'];
@@ -101,6 +107,7 @@ class stock extends CI_Controller {
 	public function sale_order_list()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			unset($_SESSION['sale_order_detail_id']);
 			$data['sale_order_detail'] = $this->stock_model->sale_order_list($_SESSION['employees_shop']);
@@ -114,6 +121,7 @@ class stock extends CI_Controller {
 	public function sale_order_detail()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$order_id = $this->uri->segment(3);
 			$data['sale_order_detail'] = $this->stock_model->sale_order_detail($order_id);
@@ -127,6 +135,7 @@ class stock extends CI_Controller {
 	public function stock_cancel()
 	{
 		@session_start();
+		$data['config'] = $this->config_model->config();
 		if(@$_SESSION['employees_id']!=""){
 			$order_id = $this->uri->segment(3);
 			$this->stock_model->stock_cancel($order_id);
