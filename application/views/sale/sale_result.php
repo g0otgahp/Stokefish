@@ -11,17 +11,20 @@ top: 0%;">
 </div>
 </div>
 <page size="A4" style="color: #000;">
-  <div class="row">
-    <div class="col-lg-offset-2 col-lg-8" align="center">
-      <h1>ใบเสร็จ</h1>
+  <div class="row" align="center">
+    <?php if ($sale_order_detail[0]['sale_order_detail_vat_status']==1): ?>
+    <h1>ใบกำกับภาษี</h1>
+    <?php else: ?>
+    <h1>ใบเสร็จ</h1>
+    <?php endif; ?>
+    <div class="col-lg-6" align="left">
       <h1><?php echo $config[0]['config_shop_name'] ?></h1>
       <h5><?php echo $config[0]['config_address'] ?> โทร. <?php echo $config[0]['config_phone'] ?></h5>
       <h5>เลขประจำผู้เสียภาษีอากร <?php echo $config[0]['config_tax'] ?></h5>
       <h5><?php echo $config[0]['config_detail'] ?></h5>
     </div>
-  </div>
-  <div class="col-xs-6">
-    <h4>รายละเอียดการขาย</h4>
+  <div class="col-xs-6" align="left">
+    <h5><b>รายละเอียดการขาย</b></h5>
     เลขที่ใบเสร็จ: <?php echo $sale_order_detail[0]['sale_order_detail_no'] ?><br>
     วันที่สั่งขาย: <?php echo $sale_order_detail[0]['sale_order_detail_date']." เวลา ".$sale_order_detail[0]['sale_order_detail_time'] ; ?><br>
     ประเภทการชำระ:
@@ -33,15 +36,14 @@ top: 0%;">
       เครดิต
     <?php endif; ?>
   </div>
-</div>
-
-  <div class="col-xs-6">
-    <h4>รายละเอียดลูกค้า</h4>
+  <div class="col-xs-6" align="left">
+    <h5><b>รายละเอียดลูกค้า</b></h5>
     ชื่อ :<?php echo $sale_order_detail[0]['member_fullname']; ?><br>
     เบอร์โทรศัพท์ :<?php echo $sale_order_detail[0]['member_phone'];?><br>
     ที่อยู่ :<?php echo $sale_order_detail[0]['member_address'];?><br>
     หมายเหตุ :<?php echo $sale_order_detail[0]['member_note'];?><br>
   </div>
+</div>
 
   <div class="col-md-12">
     <div class="panel panel">
@@ -154,17 +156,20 @@ top: 0%;">
 </page>
 
 <page size="A4" style="color: #000;">
-  <div class="row">
-    <div class="col-lg-offset-2 col-lg-8" align="center">
-      <h1>สำเนา ใบเสร็จ</h1>
+  <div class="row" align="center">
+    <?php if ($sale_order_detail[0]['sale_order_detail_vat_status']==1): ?>
+    <h1>สำเนา ใบกำกับภาษี</h1>
+    <?php else: ?>
+    <h1>สำเนา ใบเสร็จ</h1>
+    <?php endif; ?>
+    <div class="col-lg-6" align="left">
       <h1><?php echo $config[0]['config_shop_name'] ?></h1>
       <h5><?php echo $config[0]['config_address'] ?> โทร. <?php echo $config[0]['config_phone'] ?></h5>
       <h5>เลขประจำผู้เสียภาษีอากร <?php echo $config[0]['config_tax'] ?></h5>
       <h5><?php echo $config[0]['config_detail'] ?></h5>
     </div>
-  </div>
-  <div class="col-xs-6">
-    <h4>รายละเอียดการขาย</h4>
+  <div class="col-xs-6" align="left">
+    <h5><b>รายละเอียดการขาย</b></h5>
     เลขที่ใบเสร็จ: <?php echo $sale_order_detail[0]['sale_order_detail_no'] ?><br>
     วันที่สั่งขาย: <?php echo $sale_order_detail[0]['sale_order_detail_date']." เวลา ".$sale_order_detail[0]['sale_order_detail_time'] ; ?><br>
     ประเภทการชำระ:
@@ -176,15 +181,14 @@ top: 0%;">
       เครดิต
     <?php endif; ?>
   </div>
-</div>
-
-  <div class="col-xs-6">
-    <h4>รายละเอียดลูกค้า</h4>
+  <div class="col-xs-6" align="left">
+    <h5><b>รายละเอียดลูกค้า</b></h5>
     ชื่อ :<?php echo $sale_order_detail[0]['member_fullname']; ?><br>
     เบอร์โทรศัพท์ :<?php echo $sale_order_detail[0]['member_phone'];?><br>
     ที่อยู่ :<?php echo $sale_order_detail[0]['member_address'];?><br>
     หมายเหตุ :<?php echo $sale_order_detail[0]['member_note'];?><br>
   </div>
+</div>
 
   <div class="col-md-12">
     <div class="panel panel">
